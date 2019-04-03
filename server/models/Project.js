@@ -1,6 +1,6 @@
-const monoogse = require("mongoose")
+const mongoose = require("mongoose")
 
-const ProjectSchema = new monoogse.Schema({
+const ProjectSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -11,7 +11,7 @@ const ProjectSchema = new monoogse.Schema({
     },
     developers: [
         {
-            type: monoogse.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
         }
@@ -27,14 +27,12 @@ const ProjectSchema = new monoogse.Schema({
     categories: [
         {
             type: String,
-            enum: [""],
             required: true
         }
     ],
     languages: [
         {
             type: String,
-            enum: [""],
             required: true
         }
     ],
@@ -47,10 +45,10 @@ const ProjectSchema = new monoogse.Schema({
     externals: [String],
     reviews: [
         {
-            type: monoogse.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Review"
         }
     ]
 })
 
-module.exports = monoogse.model("Project", ProjectSchema)
+module.exports = mongoose.model("Project", ProjectSchema)
