@@ -1,34 +1,42 @@
 import React, { Component } from "react"
+import Logo from "../static/Logo.png"
 
 class Navbar extends Component {
     render() {
         return (
-            <div className="container">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav
+                className="navbar sticky-top navbar-expand-lg navbar-light"
+                style={{ backgroundColor: "white" }}>
+                <div className="container">
                     <a className="navbar-brand" href="#">
-                        Logo
+                        <img style={{ height: 35 }} src={Logo} />
                     </a>
-                    <form className="form-inline">
-                        <input
-                            className="form-control"
-                            type="search"
-                            placeholder="Search"
-                        />
-                    </form>
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#menu"
+                        aria-controls="menu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon" />
+                    </button>
+                    <div className="collapse navbar-collapse" id="menu">
+                        <div class="navbar-nav ml-auto">
+                            <button
+                                class="btn btn-outline-secondary"
+                                style={{ border: "none" }}>
                                 Browse
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            </button>
+                            <button
+                                class="btn btn-outline-secondary"
+                                style={{ border: "none" }}>
                                 Sign In
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         )
     }
 }
