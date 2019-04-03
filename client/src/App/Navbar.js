@@ -1,7 +1,6 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { Component } from "react"
 
-class NavBar extends React.Component {
+class Navbar extends Component {
     render() {
         return (
             <div className="container">
@@ -34,4 +33,4 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar
+export default Navbar

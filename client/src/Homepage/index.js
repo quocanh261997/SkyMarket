@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 
-export default class CategoryPage extends Component {
+class Homepage extends Component {
     render() {
         return <div />
     }
 }
+
+export default Homepage

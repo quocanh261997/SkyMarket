@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 
-export default class SignInPage extends Component {
+class SearchBox extends Component {
     render() {
         return <div />
     }
 }
+
+export default SearchBox
