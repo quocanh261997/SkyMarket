@@ -1,5 +1,5 @@
 require("dotenv").config()
-const PORT = 8080 || process.env.port
+const PORT = 8080 || process.env.PORT
 
 const app = require("express")(),
     db = require("./models"),
@@ -17,41 +17,39 @@ app.use(bodyParser.json())
 
 // Getting the apps for homepage
 app.get("/", async (req, res) => {
-    const randomApps = await db.Project.aggregate([{ $sample: { size: 4 } }], {
-        _id: 0
-    })
-    const trendingApps = await db.Project.aggregate(
-        [{ $sample: { size: 8 } }],
-        { _id: 0 }
-    )
-    const recentApps = await db.Project.aggregate([{ $sample: { size: 8 } }], {
-        _id: 0
-    })
+    const featured = await db.Project.aggregate([{ $sample: { size: 4 } }])
+    const trending = await db.Project.find()
+        .sort({ views: -1 })
+        .limit(8)
+    const recent = await db.Project.find()
+        .sort({ createdAt: -1 })
+        .limit(8)
     res.json({
-        randomApps,
-        trendingApps,
-        recentApps
+        featured,
+        trending,
+        recent
     })
 })
 
 // Getting the list of projects that have the queried category
-app.get("/:category", async (req, res) => {
-    const category = req.params.category
-    const categoryApps = await db.Project.find(
-        { category: { $eq: category } },
-        { _id: 0 }
-    )
+app.get("/category/:c", async (req, res) => {
+    const c = req.params.c.split(",")
+    const projects = await db.Project.find({
+        categories: { $all: c }
+    })
     res.json({
-        categoryApps
+        projects
     })
 })
 
 // Getting the list of projects based on queried name
-app.get("/:name", async (req, res) => {
-    const name = req.params.name
-    const app = await db.Project.find({ $text: { $search: name } })
+app.get("/search", async (req, res) => {
+    const q = req.query.q
+    const projects = await db.Project.find({
+        name: { $regex: q, $options: "i" }
+    })
     res.json({
-        app
+        projects
     })
 })
 
