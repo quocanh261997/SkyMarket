@@ -1,14 +1,30 @@
-import React from "react"
+import React, { useState } from "react"
 
-const SideBar = () => {
+const Sidebar = () => {
+    const [category, setCategory] = useState("")
+
     return (
-        <div className="ui visible sidebar vertical menu">
-            <h4>Staff Picks</h4>
-            <a className="item">Featured</a>
-            <a className="item">Essential Apps</a>
-            <a className="item">Noteworthy</a>
-        </div>
+        <ul className="list-group">
+            {[
+                "Terminal",
+                "Productivity",
+                "Compiler",
+                "Android",
+                "iOS",
+                "Backend",
+                "Frontend"
+            ].map(c => (
+                <li
+                    className={
+                        "list-group-item sidebar-item" +
+                        (category === c ? " sidebar-item__selected" : "")
+                    }
+                    onClick={() => setCategory(c)}>
+                    {c}
+                </li>
+            ))}
+        </ul>
     )
 }
 
-export default SideBar
+export default Sidebar

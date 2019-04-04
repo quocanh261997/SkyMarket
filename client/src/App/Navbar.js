@@ -50,12 +50,12 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="menu">
                         <div class="navbar-nav ml-auto">
                             <button
-                                class="btn btn-outline-secondary"
+                                class="btn btn-outline"
                                 style={{ border: "none" }}>
                                 Browse
                             </button>
                             <button
-                                class="btn btn-outline-secondary"
+                                class="btn btn-outline"
                                 style={{ border: "none" }}>
                                 Sign In
                             </button>

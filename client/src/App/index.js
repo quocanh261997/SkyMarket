@@ -5,6 +5,7 @@ import Homepage from "../Homepage"
 import Project from "../Project"
 import SignIn from "../SignIn"
 import Navbar from "./Navbar"
+import "./index.css"
 
 class App extends React.Component {
     render() {

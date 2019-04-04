@@ -1,28 +1,17 @@
 import React, { Component } from "react"
-import Background from "../static/Background.png"
 import Landing from "../static/Landing.png"
+import ProjectItemLarge from "./ProjectItemLarge"
+import ProjectItemSmall from "./ProjectItemSmall"
+import Sidebar from "./Sidebar"
 
 class Homepage extends Component {
     render() {
         return (
             <div>
-                <div
-                    style={{
-                        backgroundColor: "#7FB9DD",
-                        paddingTop: 30,
-                        paddingBottom: 30
-                    }}>
-                    <div
-                        style={{
-                            backgroundImage: `url(${Background})`,
-                            backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat"
-                        }}>
-                        <div className="container row m-auto d-flex align-items-center">
-                            <div
-                                className="col-md-6"
-                                style={{ marginBottom: "1em" }}>
+                <div className="homepage-header">
+                    <div className="homepage-header__bg">
+                        <div className="container row">
+                            <div className="col-md-6 homepage-header__search">
                                 <h2 style={{ color: "white" }}>
                                     Showcase your projects with SkyMarket
                                 </h2>
@@ -35,101 +24,37 @@ class Homepage extends Component {
                             </div>
                             <div className="col-md-6 text-center">
                                 <img
-                                    className="img-fluid"
+                                    className="homepage-header__img"
                                     src={Landing}
-                                    alt="Landing"
+                                    alt="Landing Image"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="container row">
-                    <ul className="col-md-5 list-group">
-                        <li className="list-group-item d-flex justify-content-between align-items-center active">
-                            Cras justo odio
-                            <span className="badge badge-primary badge-pill">
-                                x
-                            </span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Dapibus ac facilisis in
-                        </li>
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                            Morbi leo risus
-                        </li>
-                    </ul>
-                    <div className="col-md-7">
-                        <div>
-                            <h5>Featured Projects</h5>
-                            <dl className="list-inline dl-horizontal">
-                                <li
-                                    className="list-inline-item card"
-                                    style={{ width: "18em" }}>
-                                    <img
-                                        src="https://dummyimage.com/600x400"
-                                        className="card-img-top"
-                                        alt="Project Image"
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            Project #0
-                                        </h5>
-                                        <p className="card-text">Lorem ipsum</p>
-                                    </div>
-                                </li>
-                                <li
-                                    className="list-inline-item card"
-                                    style={{ width: "18em" }}>
-                                    <img
-                                        src="https://dummyimage.com/600x400"
-                                        className="card-img-top"
-                                        alt="Project Image"
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            Project #0
-                                        </h5>
-                                        <p className="card-text">Lorem ipsum</p>
-                                    </div>
-                                </li>
-                                <li
-                                    className="list-inline-item card"
-                                    style={{ width: "18em" }}>
-                                    <img
-                                        src="https://dummyimage.com/600x400"
-                                        className="card-img-top"
-                                        alt="Project Image"
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            Project #0
-                                        </h5>
-                                        <p className="card-text">Lorem ipsum</p>
-                                    </div>
-                                </li>
-                                <li
-                                    className="list-inline-item card"
-                                    style={{ width: "18em" }}>
-                                    <img
-                                        src="https://dummyimage.com/600x400"
-                                        className="card-img-top"
-                                        alt="Project Image"
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            Project #0
-                                        </h5>
-                                        <p className="card-text">Lorem ipsum</p>
-                                    </div>
-                                </li>
-                            </dl>
+                <div className="container row mx-auto">
+                    <div className="col-md-4 mt-5">
+                        <Sidebar />
+                    </div>
+                    <div className="col-md-8 mt-5">
+                        <h4>Featured Projects</h4>
+                        <div className="row">
+                            {[...Array(4)].map(() => (
+                                <ProjectItemLarge />
+                            ))}
                         </div>
-                        <div>
-                            <h5>Trending Projects</h5>
+                        <h4>Trending Projects</h4>
+                        <div className="row">
+                            {[...Array(4)].map(() => (
+                                <ProjectItemSmall />
+                            ))}
                         </div>
-                        <div>
-                            <h5>Recent Projects</h5>
+                        <h4>Recent Projects</h4>
+                        <div className="row">
+                            {[...Array(4)].map(() => (
+                                <ProjectItemSmall />
+                            ))}
                         </div>
                     </div>
                 </div>
