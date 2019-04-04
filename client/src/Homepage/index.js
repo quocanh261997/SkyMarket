@@ -34,7 +34,11 @@ class Homepage extends Component {
                                 />
                             </div>
                             <div className="col-md-6 text-center">
-                                <img className="img-fluid" src={Landing} />
+                                <img
+                                    className="img-fluid"
+                                    src={Landing}
+                                    alt="Landing"
+                                />
                             </div>
                         </div>
                     </div>

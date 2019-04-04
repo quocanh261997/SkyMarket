@@ -8,8 +8,8 @@ class Navbar extends Component {
                 className="navbar sticky-top navbar-expand-lg navbar-light"
                 style={{ backgroundColor: "white" }}>
                 <div className="container">
-                    <a className="navbar-brand" href="#">
-                        <img style={{ height: 35 }} src={Logo} />
+                    <a className="navbar-brand" href="/">
+                        <img style={{ height: 35 }} src={Logo} alt="Logo" />
                     </a>
                     <button
                         className="navbar-toggler"
