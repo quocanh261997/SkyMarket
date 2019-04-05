@@ -16,12 +16,15 @@ class Homepage extends Component {
                                 <h2 style={{ color: "white" }}>
                                     Showcase your projects with SkyMarket
                                 </h2>
+<<<<<<< HEAD
                                 {/* <input
                                     type="text"
                                     class="form-control"
                                     placeholder="Project's name"
                                     style={{ width: "100%" }}
                                 /> */}
+=======
+>>>>>>> 2b0074c6e43661a56ae248cf98ed32de60a7703d
                                 <SearchBox />
                             </div>
                             <div className="col-md-6 text-center">

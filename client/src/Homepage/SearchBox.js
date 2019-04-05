@@ -1,42 +1,65 @@
-import React from "react"
-import db from "../db"
-import _ from "lodash"
-import Suggestion from "./Suggestion"
+import React, { Component } from "react"
 
-class SearchBox extends React.Component {
+class SearchBox extends Component {
     state = {
-        query: "",
-        results: []
+        q: "",
+        results: [],
+        display: true
     }
 
-    getInfo = async () => {
-        const response = await db.get(`/search?q=${this.state.query}`)
-        console.log(response)
+    timeout = null
 
-        this.setState({
-            results: response.data.projects
+    componentDidMount() {
+        window.addEventListener("click", () => {
+            this.setState({ display: false })
         })
     }
 
-    handleInputChange = () => {
-        this.setState(
-            {
-                query: this.search.value
-            },
-            () => {}
-        )
+    handleChange = e => {
+        const text = e.target.value
+        this.setState({ q: text })
+        if (text.length === 0) this.setState({ results: [] })
+        else
+            this.timeout = setTimeout(() => {
+                if (this.state.q === text)
+                    this.setState({
+                        results: [...Array(5)].map(Math.random),
+                        display: true
+                    })
+            }, 500)
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
     }
 
     render() {
+        const { q, results, display } = this.state
         return (
-            <form>
+            <div className="dropdown">
                 <input
-                    placeholder="Project's name"
-                    ref={input => (this.search = input)}
-                    onChange={this.handleInputChange}
+                    type="text"
+                    className="form-control dropdown-toggle"
+                    id="searchDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    value={q}
+                    onChange={this.handleChange}
                 />
-                <Suggestion results={this.state.results} />
-            </form>
+                <ul
+                    style={{
+                        display:
+                            display && results.length > 0 ? "block" : "none"
+                    }}
+                    className="dropdown-menu w-100"
+                    aria-labelledby="searchDropdown"
+                >
+                    {this.state.results.map(i => (
+                        <li className="dropdown-item">{i}</li>
+                    ))}
+                </ul>
+            </div>
         )
     }
 }
