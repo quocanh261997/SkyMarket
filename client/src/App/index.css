@@ -1,9 +1,18 @@
+.navbar-white {
+    background-color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+.navbar-shadow {
+    box-shadow: 0px 1px 10px #777777;
+}
+
 .homepage-header {
     background-color: #7fb9dd;
 }
 
 .homepage-header__bg {
-    height: 340px;
+    height: 320px;
     background-image: url("../static/Background.png");
     background-position: center;
     background-size: cover;
@@ -14,7 +23,7 @@
 }
 
 .homepage-header__img {
-    max-height: 290px;
+    max-height: 280px;
 }
 
 .homepage-header__search {

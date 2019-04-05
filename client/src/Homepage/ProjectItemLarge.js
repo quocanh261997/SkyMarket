@@ -7,7 +7,7 @@ const ProjectItemLarge = () => {
                 <img
                     src="https://dummyimage.com/300x200"
                     className="card-img-top"
-                    alt="Project Image"
+                    alt="Project"
                 />
                 <div className="card-body">
                     <h5 className="card-title">Project #0</h5>
