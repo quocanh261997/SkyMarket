@@ -27,7 +27,7 @@ export const fetchProjectCategory = category => {
 
 export const fetchProjectName = name => {
     return async dispatch => {
-        const response = await db.get("search", {
+        const response = await db.get("/search", {
             params: {
                 q: name
             }

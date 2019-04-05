@@ -32,7 +32,8 @@ class Navbar extends Component {
                 style={{
                     backgroundColor: "white",
                     boxShadow: this.state.shadow ? "0px 1px 10px #555" : ""
-                }}>
+                }}
+            >
                 <div className="container">
                     <a className="navbar-brand" href="/">
                         <img style={{ width: 60 }} src={Logo} alt="Logo" />
@@ -44,19 +45,22 @@ class Navbar extends Component {
                         data-target="#menu"
                         aria-controls="menu"
                         aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon" />
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon" />
                     </button>
                     <div className="collapse navbar-collapse" id="menu">
-                        <div class="navbar-nav ml-auto">
+                        <div className="navbar-nav ml-auto">
                             <button
-                                class="btn btn-outline"
-                                style={{ border: "none" }}>
+                                className="btn btn-outline"
+                                style={{ border: "none" }}
+                            >
                                 Browse
                             </button>
                             <button
-                                class="btn btn-outline"
-                                style={{ border: "none" }}>
+                                className="btn btn-outline"
+                                style={{ border: "none" }}
+                            >
                                 Sign In
                             </button>
                         </div>

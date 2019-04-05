@@ -3,6 +3,7 @@ import Landing from "../static/Landing.png"
 import ProjectItemLarge from "./ProjectItemLarge"
 import ProjectItemSmall from "./ProjectItemSmall"
 import Sidebar from "./Sidebar"
+import SearchBox from "./SearchBox"
 
 class Homepage extends Component {
     render() {
@@ -15,12 +16,13 @@ class Homepage extends Component {
                                 <h2 style={{ color: "white" }}>
                                     Showcase your projects with SkyMarket
                                 </h2>
-                                <input
+                                {/* <input
                                     type="text"
                                     class="form-control"
                                     placeholder="Project's name"
                                     style={{ width: "100%" }}
-                                />
+                                /> */}
+                                <SearchBox />
                             </div>
                             <div className="col-md-6 text-center">
                                 <img

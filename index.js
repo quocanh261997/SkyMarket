@@ -47,7 +47,7 @@ app.get("/search", async (req, res) => {
     const q = req.query.q
     const projects = await db.Project.find({
         name: { $regex: q, $options: "i" }
-    })
+    }).limit(5)
     res.json({
         projects
     })
