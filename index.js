@@ -17,11 +17,14 @@ app.use(bodyParser.json())
 
 // Getting the apps for homepage
 app.get("/", async (req, res) => {
-    const featured = await db.Project.aggregate([{ $sample: { size: 4 } }])
-    const trending = await db.Project.find()
+    const featured = await db.Project.aggregate([
+        { $sample: { size: 4 } },
+        { $project: { name: 1, description: 1, icon: 1 } }
+    ])
+    const trending = await db.Project.find({}, "name description icon")
         .sort({ views: -1 })
         .limit(8)
-    const recent = await db.Project.find()
+    const recent = await db.Project.find({}, "name description icon")
         .sort({ createdAt: -1 })
         .limit(8)
     res.json({

@@ -4,9 +4,27 @@ import ProjectItemLarge from "./ProjectItemLarge"
 import ProjectItemSmall from "./ProjectItemSmall"
 import Sidebar from "./Sidebar"
 import SearchBox from "./SearchBox"
+import db from "../db"
 
 class Homepage extends Component {
+    state = {
+        featured: [],
+        trending: [],
+        recent: []
+    }
+
+    componentDidMount() {
+        db.get("/").then(response => {
+            console.log(response.data)
+            this.setState({
+                ...response.data
+            })
+        })
+    }
+
     render() {
+        console.log(this.state.featured)
+
         return (
             <div>
                 <div className="homepage-header">
@@ -16,15 +34,6 @@ class Homepage extends Component {
                                 <h2 style={{ color: "white" }}>
                                     Showcase your projects with SkyMarket
                                 </h2>
-<<<<<<< HEAD
-                                {/* <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Project's name"
-                                    style={{ width: "100%" }}
-                                /> */}
-=======
->>>>>>> 2b0074c6e43661a56ae248cf98ed32de60a7703d
                                 <SearchBox />
                             </div>
                             <div className="col-md-6 text-center">
@@ -45,20 +54,20 @@ class Homepage extends Component {
                     <div className="col-md-8 mt-5">
                         <h4>Featured Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemLarge />
+                            {this.state.featured.map(project => (
+                                <ProjectItemLarge result={project} />
                             ))}
                         </div>
                         <h4>Trending Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemSmall />
+                            {this.state.trending.map(project => (
+                                <ProjectItemSmall result={project} />
                             ))}
                         </div>
                         <h4>Recent Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemSmall />
+                            {this.state.recent.map(project => (
+                                <ProjectItemSmall result={project} />
                             ))}
                         </div>
                     </div>

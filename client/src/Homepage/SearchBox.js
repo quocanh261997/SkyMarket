@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import db from "../db"
 
 class SearchBox extends Component {
     state = {
@@ -15,17 +16,22 @@ class SearchBox extends Component {
         })
     }
 
+    getInfo = async () => {
+        const response = await db.get(`/search?q=${this.state.q}`)
+        console.log(response)
+        this.setState({
+            results: response.data.projects,
+            display: true
+        })
+    }
+
     handleChange = e => {
         const text = e.target.value
         this.setState({ q: text })
         if (text.length === 0) this.setState({ results: [] })
         else
             this.timeout = setTimeout(() => {
-                if (this.state.q === text)
-                    this.setState({
-                        results: [...Array(5)].map(Math.random),
-                        display: true
-                    })
+                if (this.state.q === text) this.getInfo()
             }, 500)
     }
 
@@ -44,6 +50,7 @@ class SearchBox extends Component {
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    autoComplete="off"
                     value={q}
                     onChange={this.handleChange}
                 />
@@ -56,7 +63,7 @@ class SearchBox extends Component {
                     aria-labelledby="searchDropdown"
                 >
                     {this.state.results.map(i => (
-                        <li className="dropdown-item">{i}</li>
+                        <li className="dropdown-item">{i.name}</li>
                     ))}
                 </ul>
             </div>
