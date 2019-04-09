@@ -36,29 +36,26 @@ class Navbar extends Component {
                     <a className="navbar-brand" href="/">
                         <img style={{ width: 60 }} src={Logo} alt="Logo" />
                     </a>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#menu"
-                        aria-controls="menu"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="menu">
-                        <div className="navbar-nav ml-auto">
-                            <button
-                                className="btn btn-outline"
-                                style={{ border: "none" }}>
-                                Browse
-                            </button>
-                            <button
-                                className="btn btn-outline"
-                                style={{ border: "none" }}>
-                                Sign In
-                            </button>
-                        </div>
+                    <div>
+                        <button
+                            className="btn btn-outline"
+                            style={{ border: "none", marginRight: 5 }}>
+                            Browse
+                        </button>
+                        <button
+                            className="btn btn-outline"
+                            style={{ border: "none", marginRight: 5 }}>
+                            Sign In
+                        </button>
+                        <button
+                            className="navbar-toggler d-md-none"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#sidebar"
+                            aria-controls="sidebar"
+                            aria-expanded="false">
+                            <span className="navbar-toggler-icon" />
+                        </button>
                     </div>
                 </div>
             </nav>

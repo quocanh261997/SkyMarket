@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 
-const Sidebar = () => {
+const Sidebar = props => {
     const [category, setCategory] = useState("")
+    console.log(props.show)
 
     return (
-        <ul className="list-group">
+        <ul id="sidebar" className="list-group collapse">
             {[
                 "Terminal",
                 "Productivity",

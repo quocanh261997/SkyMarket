@@ -44,6 +44,7 @@ class SearchBox extends Component {
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    placeholder="Search Projects"
                     value={q}
                     onChange={this.handleChange}
                 />

@@ -10,7 +10,7 @@ class Homepage extends Component {
         return (
             <div>
                 <div className="homepage-header">
-                    <div className="homepage-header__bg">
+                    <div className="homepage-header__background">
                         <div className="container row">
                             <div className="col-md-6 homepage-header__search">
                                 <h2 style={{ color: "white" }}>
@@ -20,7 +20,7 @@ class Homepage extends Component {
                             </div>
                             <div className="col-md-6 text-center">
                                 <img
-                                    className="homepage-header__img"
+                                    className="homepage-header__image"
                                     src={Landing}
                                     alt="Landing Image"
                                 />
@@ -30,10 +30,10 @@ class Homepage extends Component {
                 </div>
 
                 <div className="container row mx-auto">
-                    <div className="col-md-4 mt-5">
+                    <div className="col-md-4 mt-4">
                         <Sidebar />
                     </div>
-                    <div className="col-md-8 mt-5">
+                    <div className="col-md-8 mt-4">
                         <h4>Featured Projects</h4>
                         <div className="row">
                             {[...Array(4)].map(() => (

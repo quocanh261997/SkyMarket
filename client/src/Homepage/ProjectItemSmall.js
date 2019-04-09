@@ -2,16 +2,16 @@ import React from "react"
 
 const ProjectItemSmall = () => {
     return (
-        <div className="col-md-3 mb-4">
-            <div className="card project-item">
+        <div className="col-lg-4 col-sm-6 mb-4">
+            <div className="project-item project-item__small">
                 <img
+                    className="project-item__small__image"
                     src="https://dummyimage.com/300x200"
-                    className="card-img-top"
-                    alt="Project Image"
+                    alt="Project"
                 />
-                <div className="card-body">
-                    <h5 className="card-title">Project #0</h5>
-                    <p className="card-text">Lorem ipsum</p>
+                <div className="project-item__body">
+                    <p className="project-item__title">Project #0</p>
+                    <p className="project-item__text">Lorem ipsum</p>
                 </div>
             </div>
         </div>
