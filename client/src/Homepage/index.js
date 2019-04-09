@@ -23,8 +23,6 @@ class Homepage extends Component {
     }
 
     render() {
-        console.log(this.state.featured)
-
         return (
             <div>
                 <div className="homepage-header">
@@ -46,7 +44,6 @@ class Homepage extends Component {
                         </div>
                     </div>
                 </div>
-
                 <div className="container row mx-auto">
                     <div className="col-md-4 mt-5">
                         <Sidebar />

@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import Logo from "../static/Logo.png"
 
 class Navbar extends Component {
@@ -50,18 +51,20 @@ class Navbar extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="menu">
                         <div className="navbar-nav ml-auto">
-                            <button
+                            <Link
+                                to="/"
                                 className="btn btn-outline"
                                 style={{ border: "none" }}
                             >
                                 Browse
-                            </button>
-                            <button
+                            </Link>
+                            <Link
+                                to="/signin"
                                 className="btn btn-outline"
                                 style={{ border: "none" }}
                             >
                                 Sign In
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
