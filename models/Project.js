@@ -1,15 +1,33 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose"),
+    languages = require("./enums/languages"),
+    categories = require("./enums/categories")
 
 const ProjectSchema = new mongoose.Schema(
     {
         name: {
             type: String,
+            maxlength: 20,
+            required: true
+        },
+        headline: {
+            type: String,
+            maxlength: 50,
             required: true
         },
         description: {
             type: String,
             required: true
         },
+        icon: {
+            type: String,
+            required: true
+        },
+        photos: [
+            {
+                type: String,
+                required: true
+            }
+        ],
         developers: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -28,26 +46,23 @@ const ProjectSchema = new mongoose.Schema(
         categories: [
             {
                 type: String,
+                enum: categories,
                 required: true
             }
         ],
         languages: [
             {
                 type: String,
+                enum: languages,
                 required: true
             }
         ],
-        photos: [
+        externals: [
             {
-                type: String,
-                required: true
+                name: String,
+                link: String
             }
         ],
-        icon: {
-            type: String,
-            required: true
-        },
-        externals: [String],
         reviews: [
             {
                 type: mongoose.Schema.Types.ObjectId,
