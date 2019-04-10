@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { signIn, signUp } from "../../libs/actions"
+import { signIn, signUp } from "../../libs/redux/actions"
 import FacebookAuth from "./FacebookAuth"
 import GoogleAuth from "./GoogleAuth"
 

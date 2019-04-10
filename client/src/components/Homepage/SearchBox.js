@@ -59,8 +59,7 @@ class SearchBox extends Component {
                         display:
                             display && results.length > 0 ? "block" : "none"
                     }}
-                    className="dropdown-menu w-100"
-                    aria-labelleapiy="searchDropdown">
+                    className="dropdown-menu w-100">
                     {this.state.results.map(i => (
                         <li className="dropdown-item">{i.name}</li>
                     ))}
