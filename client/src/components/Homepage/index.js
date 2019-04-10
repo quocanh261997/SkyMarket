@@ -1,11 +1,27 @@
 import React, { Component } from "react"
-import Landing from "../static/Landing.png"
+import api from "../../libs/api"
+import Landing from "../../static/Landing.png"
 import ProjectItemLarge from "./ProjectItemLarge"
 import ProjectItemSmall from "./ProjectItemSmall"
-import Sidebar from "./Sidebar"
 import SearchBox from "./SearchBox"
+import Sidebar from "./Sidebar"
 
 class Homepage extends Component {
+    state = {
+        featured: [...Array(6)],
+        trending: [...Array(6)],
+        recent: [...Array(6)]
+    }
+
+    componentDidMount() {
+        api.get("/").then(response => {
+            console.log(response.data)
+            this.setState({
+                ...response.data
+            })
+        })
+    }
+
     render() {
         return (
             <div>
@@ -22,13 +38,12 @@ class Homepage extends Component {
                                 <img
                                     className="homepage-header__image"
                                     src={Landing}
-                                    alt="Landing Image"
+                                    alt="Landing"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div className="container row mx-auto">
                     <div className="col-md-4 mt-4">
                         <Sidebar />
@@ -36,20 +51,20 @@ class Homepage extends Component {
                     <div className="col-md-8 mt-4">
                         <h4>Featured Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemLarge />
+                            {this.state.featured.map(project => (
+                                <ProjectItemLarge result={project} />
                             ))}
                         </div>
                         <h4>Trending Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemSmall />
+                            {this.state.trending.map(project => (
+                                <ProjectItemSmall result={project} />
                             ))}
                         </div>
                         <h4>Recent Projects</h4>
                         <div className="row">
-                            {[...Array(4)].map(() => (
-                                <ProjectItemSmall />
+                            {this.state.recent.map(project => (
+                                <ProjectItemSmall result={project} />
                             ))}
                         </div>
                     </div>

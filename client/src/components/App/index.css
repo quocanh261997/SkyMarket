@@ -13,7 +13,7 @@
 
 .homepage-header__background {
     height: 320px;
-    background-image: url("../static/Background.png");
+    background-image: url("../../static/Background.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -61,7 +61,7 @@
 
 .project-item {
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 5px;
+    border-radius: 6px;
     transition: box-shadow 0.2s ease;
 }
 
@@ -77,17 +77,39 @@
     width: 100%;
 }
 
+@media only screen and (max-width: 768px) {
+    .project-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+    }
+
+    .project-item:hover {
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .project-item__image {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+    }
+}
+
 .project-item__small {
     display: flex;
     flex-direction: row;
     align-items: center;
+    border: none;
+    cursor: pointer;
 }
 
 .project-item__small__image {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     width: 60px;
     height: 60px;
+    border-radius: 30px;
 }
 
 .project-item__body {
@@ -96,6 +118,7 @@
 
 .project-item__title {
     font-weight: bold;
+    font-size: small;
     margin: 0;
 }
 

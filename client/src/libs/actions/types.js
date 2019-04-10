@@ -1,3 +1,6 @@
 export const FETCH_PROJECTS = "FETCH_PROJECTS"
 export const FETCH_PROJECT_CATEGORY = "FETCH_PROJECT_CATEGORY"
 export const FETCH_PROJECT_NAME = "FETCH_PROJECT_NAME"
+export const SIGN_IN = "SIGN_IN"
+export const SIGN_OUT = "SIGN_OUT"
+export const AUTH_ERROR = "AUTH_ERROR"

@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import Logo from "../static/Logo.png"
+import { Link } from "react-router-dom"
+import Logo from "../../static/Logo.png"
 
 class Navbar extends Component {
     state = {
@@ -37,16 +38,18 @@ class Navbar extends Component {
                         <img style={{ width: 60 }} src={Logo} alt="Logo" />
                     </a>
                     <div>
-                        <button
+                        <Link
+                            to="/"
                             className="btn btn-outline"
                             style={{ border: "none", marginRight: 5 }}>
                             Browse
-                        </button>
-                        <button
+                        </Link>
+                        <Link
+                            to="/signin"
                             className="btn btn-outline"
                             style={{ border: "none", marginRight: 5 }}>
                             Sign In
-                        </button>
+                        </Link>
                         <button
                             className="navbar-toggler d-md-none"
                             type="button"

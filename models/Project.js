@@ -43,6 +43,10 @@ const ProjectSchema = new mongoose.Schema(
                 required: true
             }
         ],
+        icon: {
+            type: String,
+            required: true
+        },
         externals: [String],
         reviews: [
             {
