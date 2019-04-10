@@ -1,4 +1,5 @@
 import api from "../api"
+import { setAuthHeader, removeAuthHeader } from "../api"
 import {
     AUTH_ERROR,
     FETCH_PROJECTS,
@@ -42,13 +43,15 @@ export const fetchProjectName = name => {
     }
 }
 
-export const signUp = (username, password) => {
+export const signUp = (username, email, password) => {
     return async dispatch => {
         try {
             const response = await api.post("/signup", {
                 username,
+                email,
                 password
             })
+            console.log(response)
             dispatch({
                 type: SIGN_IN,
                 payload: username
@@ -62,13 +65,14 @@ export const signUp = (username, password) => {
     }
 }
 
-export const signIn = (username, password) => {
+export const signIn = (userInput, password) => {
     return async dispatch => {
         try {
-            const response = await api.post("/signin", {
-                username,
+            const { token, username } = await api.post("/signin", {
+                userInput,
                 password
             })
+            setAuthHeader(token)
             dispatch({
                 type: SIGN_IN,
                 payload: username
@@ -83,7 +87,10 @@ export const signIn = (username, password) => {
 }
 
 export const signOut = () => {
-    return {
-        type: SIGN_OUT
+    return async dispatch => {
+        removeAuthHeader()
+        dispatch({
+            type: SIGN_OUT
+        })
     }
 }
