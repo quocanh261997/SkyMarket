@@ -1,7 +1,5 @@
-import api from "../api"
-import { setAuthHeader, removeAuthHeader } from "../api"
+import api, { removeAuthHeader, setAuthHeader } from "../api"
 import {
-    AUTH_ERROR,
     FETCH_PROJECTS,
     FETCH_PROJECT_CATEGORY,
     FETCH_PROJECT_NAME,
@@ -44,50 +42,48 @@ export const fetchProjectName = name => {
 }
 
 export const signUp = (username, email, password) => {
-    return async dispatch => {
-        try {
-            const response = await api.post("/signup", {
+    return dispatch => {
+        return api
+            .post("/signup", {
                 username,
                 email,
                 password
             })
-            console.log(response)
-            dispatch({
-                type: SIGN_IN,
-                payload: username
+            .then(({ data: { token, ...payload } }) => {
+                setAuthHeader(token)
+                dispatch({
+                    type: SIGN_IN,
+                    payload
+                })
             })
-            // history.push("/")
-        } catch (err) {
-            dispatch({
-                type: AUTH_ERROR
+            .catch(error => {
+                throw new Error(error.response.data.type)
             })
-        }
     }
 }
 
 export const signIn = (userInput, password) => {
     return async dispatch => {
-        try {
-            const { token, username } = await api.post("/signin", {
+        return api
+            .post("/signin", {
                 userInput,
                 password
             })
-            setAuthHeader(token)
-            dispatch({
-                type: SIGN_IN,
-                payload: username
+            .then(({ data: { token, ...payload } }) => {
+                setAuthHeader(token)
+                dispatch({
+                    type: SIGN_IN,
+                    payload
+                })
             })
-            // history.push("/")
-        } catch (err) {
-            dispatch({
-                type: AUTH_ERROR
+            .catch(error => {
+                throw new Error(error.response.data.type)
             })
-        }
     }
 }
 
 export const signOut = () => {
-    return async dispatch => {
+    return dispatch => {
         removeAuthHeader()
         dispatch({
             type: SIGN_OUT

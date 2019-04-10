@@ -1,16 +1,17 @@
 import { SIGN_IN, SIGN_OUT } from "./types"
 
 const INITIAL_AUTH_STATE = {
-    isSignedIn: false,
-    username: null
+    _id: "",
+    username: "",
+    photo: ""
 }
 
 export const authReducer = (state = INITIAL_AUTH_STATE, action) => {
     switch (action.type) {
         case SIGN_IN:
-            return { ...state, isSignedIn: true, username: action.payload }
+            return action.payload
         case SIGN_OUT:
-            return { ...state, isSignedIn: false, username: null }
+            return INITIAL_AUTH_STATE
         default:
             return state
     }

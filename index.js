@@ -26,123 +26,138 @@ const authMiddleware = (req, res, next) => {
     }
 }
 
-/**
- * @returns
- *      4 random featured apps
- *      8 trending apps
- *      8 recently added
- *      All categories
- */
-
-app.get("/secret", authMiddleware, (req, res) => {
-    res.send("Oopss")
-})
-
 // Getting the apps for homepage
 app.get("/", async (req, res) => {
-    const featured = await db.Project.aggregate([
-        { $sample: { size: 4 } },
-        { $project: { name: 1, description: 1, icon: 1 } }
-    ])
-    const trending = await db.Project.find({}, "name description icon")
-        .sort({ views: -1 })
-        .limit(8)
-    const recent = await db.Project.find({}, "name description icon")
-        .sort({ createdAt: -1 })
-        .limit(8)
-    res.json({
-        featured,
-        trending,
-        recent
-    })
+    try {
+        const featured = await db.Project.aggregate([
+            { $sample: { size: 4 } },
+            { $project: { name: 1, description: 1, icon: 1 } }
+        ])
+        const trending = await db.Project.find({}, "name icon headline")
+            .sort({ views: -1 })
+            .limit(8)
+        const recent = await db.Project.find({}, "name icon headline")
+            .sort({ createdAt: -1 })
+            .limit(8)
+        res.status(200).json({
+            featured,
+            trending,
+            recent
+        })
+    } catch (err) {
+        next(err)
+    }
 })
 
 // Getting the list of projects that have the queried category
 app.get("/category/:c", async (req, res) => {
-    const c = req.params.c.split(",")
-    const projects = await db.Project.find({
-        categories: { $all: c }
-    })
-    res.json({
-        projects
-    })
+    try {
+        const c = req.params.c.split(",")
+        const projects = await db.Project.find(
+            {
+                categories: { $all: c }
+            },
+            "name icon headline"
+        )
+        res.status(200).json({
+            projects
+        })
+    } catch (err) {
+        next(err)
+    }
 })
 
 // Getting the list of projects based on queried name
-app.get("/search", async (req, res) => {
-    const q = req.query.q
-    const projects = await db.Project.find({
-        name: { $regex: q, $options: "i" }
-    }).limit(5)
-    res.json({
-        projects
-    })
+app.get("/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const projects = await db.Project.find(
+            {
+                name: { $regex: q, $options: "i" }
+            },
+            "name icon"
+        ).limit(5)
+        res.status(200).json({
+            projects
+        })
+    } catch (err) {
+        next(err)
+    }
 })
 
-app.post("/signup", async (req, res) => {
-    const { username, email, password } = req.body
+app.post("/signup", async (req, res, next) => {
+    const {
+        username,
+        email,
+        password,
+        photo = "http://www.colegioexpressao.com/assets/images/avatar-2.png"
+    } = req.body
     db.User.create({
         username,
         email,
         password,
-        photo:
-            "https://www.own3d.tv/wp-content/uploads/2018/01/Avatar-Maker-Overfl%C3%A4che.jpg"
+        photo
     })
-        .then(({ _id, photo }) => {
-            let token = jwt.sign({ _id }, process.env.SECRET_KEY)
-            res.status(201).json({ username, photo, token })
+        .then(({ _id, username, photo }) => {
+            let token = jwt.sign(
+                { _id, username, photo },
+                process.env.SECRET_KEY
+            )
+            res.status(201).json({ _id, username, photo, token })
         })
         .catch(err => {
-            console.log(err)
-            if (err.code === 11000)
-                res.status(400).json({
-                    message: "Duplicate username/email"
-                })
-            else
-                res.status(500).json({
-                    message: "Internal error"
-                })
+            if (err.code === 11000) {
+                if (err.message.indexOf("username") !== -1)
+                    next({
+                        status: 400,
+                        type: "DUPLICATE_USERNAME"
+                    })
+                else
+                    next({
+                        status: 400,
+                        type: "DUPLICATE_EMAIL"
+                    })
+            } else next(err)
         })
 })
 
 app.post("/signin", async (req, res, next) => {
     const { userInput, password } = req.body
     try {
-        let user
-        if (emailIsValid(userInput)) {
-            user = await db.User.findOne({
-                email: userInput
-            })
-        } else {
-            user = await db.User.findOne({
-                username: userInput
-            })
-        }
-        let { photo } = user
+        let user = await db.User.findOne({
+            $or: [{ email: userInput }, { username: userInput }]
+        })
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
-            let token = jwt.sign({ username }, process.env.SECRET_KEY)
-            res.status(200).json({ username, photo, token })
-        } else {
-            return next({
+            const { _id, username, photo } = user
+            let token = jwt.sign(
+                { _id, username, photo },
+                process.env.SECRET_KEY
+            )
+            res.status(200).json({ _id, username, photo, token })
+        } else
+            next({
                 status: 400,
-                message: "Incorrect password"
+                type: "INVALID_PASSWORD"
             })
-        }
     } catch (err) {
-        return next({
+        next({
             status: 400,
-            message: "Incorrect username"
+            type: "INVALID_EMAIL"
         })
     }
 })
 
-const emailIsValid = email => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
+// function isEmail(email) {
+//     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+//     return re.test(email)
+// }
 
-app.use((error, req, res) => {
-    res.status(error.status).json({ message: error.message })
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500).json({
+        type: err.type || "INTERNAL_ERROR",
+        message: err.message || "Oops! Something went wrong :("
+    })
 })
 
 app.listen(PORT, err => {

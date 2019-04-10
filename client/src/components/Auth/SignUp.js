@@ -1,21 +1,26 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
+import { Link, withRouter } from "react-router-dom"
 import { signUp } from "../../libs/redux/actions"
-import { withRouter } from "react-router-dom"
+import { DUPLICATE_EMAIL, DUPLICATE_USERNAME } from "../../libs/redux/types"
 
 class SignUp extends Component {
     state = {
         username: "",
         email: "",
-        password: ""
+        password: "",
+        error: ""
     }
 
     onSignUp = e => {
         e.preventDefault()
+        this.setState({ error: "" })
         const { username, password, email } = this.state
         if (username && password && email) {
-            this.props.signUp(username, email, password)
-            this.props.history.push("/")
+            this.props
+                .signUp(username, email, password)
+                .then(() => this.props.history.push("/"))
+                .catch(error => this.setState({ error: error.message }))
         }
     }
 
@@ -26,46 +31,64 @@ class SignUp extends Component {
     render() {
         return (
             <div className="container">
-                <form onSubmit={this.onSignUp}>
+                <form className="auth-form" onSubmit={this.onSignUp}>
+                    <h2 style={{ marginBottom: "1em" }}>Sign Up</h2>
                     <div className="form-group">
-                        <label>Username</label>
                         <input
                             type="text"
                             name="username"
-                            className="form-control"
-                            placeholder="Enter username"
+                            className={
+                                "form-control" +
+                                (this.state.error === DUPLICATE_USERNAME
+                                    ? " is-invalid"
+                                    : "")
+                            }
+                            placeholder="Username"
                             autoComplete="off"
                             value={this.state.username}
                             onChange={this.handleChange}
                         />
+                        <div className="invalid-feedback">
+                            Username already exists
+                        </div>
                     </div>
                     <div className="form-group">
-                        <label>Email</label>
                         <input
                             type="email"
                             name="email"
-                            className="form-control"
-                            placeholder="Enter email"
+                            className={
+                                "form-control" +
+                                (this.state.error === DUPLICATE_EMAIL
+                                    ? " is-invalid"
+                                    : "")
+                            }
+                            placeholder="Email"
                             autoComplete="off"
                             value={this.state.email}
                             onChange={this.handleChange}
                         />
+                        <div className="invalid-feedback">
+                            Email already exists
+                        </div>
                     </div>
                     <div className="form-group">
-                        <label>Password</label>
                         <input
                             type="password"
                             name="password"
                             className="form-control"
-                            placeholder="Enter password"
+                            placeholder="Password"
                             autoComplete="off"
                             value={this.state.password}
                             onChange={this.handleChange}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary btn-block">
-                        Sign Up
+                    <button
+                        type="submit"
+                        className="btn btn-primary btn-block"
+                        style={{ marginBottom: "2em" }}>
+                        Submit
                     </button>
+                    <Link to="/signin">Already have an account?</Link>
                 </form>
             </div>
         )

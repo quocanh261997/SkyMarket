@@ -15,7 +15,6 @@ class Homepage extends Component {
 
     componentDidMount() {
         api.get("/").then(response => {
-            console.log(response.data)
             this.setState({
                 ...response.data
             })

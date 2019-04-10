@@ -1,10 +1,16 @@
 const mongoose = require("mongoose")
 
+const options = {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}
+
 mongoose.set("debug", true)
 mongoose.Promise = global.Promise
 mongoose
     .connect(
-        "mongodb://quocanh261997:diamond26@ds135456.mlab.com:35456/skymarket"
+        "mongodb://tuanle:tuanlm1235@ds017155.mlab.com:17155/skymarket",
+        options
     )
     .catch(error => console.error(`MongoDB connection error: ${error}`))
 

@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 
-const Sidebar = props => {
+const Sidebar = () => {
     const [category, setCategory] = useState("")
-    console.log(props.show)
 
     return (
         <ul id="sidebar" className="list-group collapse">
@@ -16,6 +15,7 @@ const Sidebar = props => {
                 "Frontend"
             ].map(c => (
                 <li
+                    key={c}
                     className={
                         "list-group-item sidebar-item" +
                         (category === c ? " sidebar-item__selected" : "")
