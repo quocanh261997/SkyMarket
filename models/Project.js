@@ -1,6 +1,4 @@
-const mongoose = require("mongoose"),
-    languages = require("./enums/languages"),
-    categories = require("./enums/categories")
+const mongoose = require("mongoose")
 
 const ProjectSchema = new mongoose.Schema(
     {
@@ -28,13 +26,6 @@ const ProjectSchema = new mongoose.Schema(
                 required: true
             }
         ],
-        developers: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-                required: true
-            }
-        ],
         views: {
             type: Number,
             default: 0
@@ -43,24 +34,23 @@ const ProjectSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        categories: [
-            {
-                type: String,
-                enum: categories,
-                required: true
-            }
-        ],
-        languages: [
-            {
-                type: String,
-                enum: languages,
-                required: true
-            }
-        ],
         externals: [
             {
                 name: String,
                 link: String
+            }
+        ],
+        categories: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Category"
+            }
+        ],
+        developers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true
             }
         ],
         reviews: [
