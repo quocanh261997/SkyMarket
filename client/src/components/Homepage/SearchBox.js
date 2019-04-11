@@ -64,6 +64,7 @@ class SearchBox extends Component {
                         <li
                             className="dropdown-item"
                             style={{
+                                padding: "10px 20px",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between"

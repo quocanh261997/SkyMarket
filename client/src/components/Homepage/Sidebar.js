@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import "../../libs/api"
 import api from "../../libs/api"
+import { withRouter } from "react-router-dom"
 
 class Sidebar extends Component {
     state = {
@@ -13,7 +13,12 @@ class Sidebar extends Component {
         )
     }
 
-    handleClick = () => {}
+    handleClick = ({ _id, name, photo }) => {
+        this.props.history.push(`/category/${_id}`, {
+            name,
+            photo
+        })
+    }
 
     render() {
         return (
@@ -45,4 +50,4 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar
+export default withRouter(Sidebar)

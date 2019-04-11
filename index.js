@@ -63,19 +63,21 @@ app.get("/category", async (req, res) => {
 })
 
 // Getting the list of projects that have the queried category
-app.get("/category/:c", async (req, res) => {
+app.get("/category/:id", async (req, res, next) => {
     try {
-        const c = req.params.c.split(",")
+        const id = req.params.id
         const projects = await db.Project.find(
             {
-                categories: { $all: c }
+                categories: id
             },
             "name icon headline"
-        )
+        ).limit(15)
         res.status(200).json({
             projects
         })
     } catch (err) {
+        console.log(err.message)
+
         next(err)
     }
 })

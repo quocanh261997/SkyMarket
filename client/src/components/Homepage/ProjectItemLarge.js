@@ -10,7 +10,13 @@ const ProjectItemLarge = ({
     return (
         <div className="col-lg-4 col-sm-6 mb-4">
             <div className="project-item">
-                <img className="project-item__image" src={icon} alt="Project" />
+                <div className="project-item__image">
+                    <img
+                        className="project-item__small__image"
+                        src={icon}
+                        alt="Project"
+                    />
+                </div>
                 <div className="project-item__body">
                     <p className="project-item__title">{name}</p>
                     <p className="project-item__text">{headline}</p>
