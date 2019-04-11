@@ -3,7 +3,7 @@ import React from "react"
 const ProjectItemSmall = ({
     result: {
         name = "Test Project",
-        description = "This is a very cool project. Check it out!",
+        headline = "This is a very cool project. Check it out!",
         icon = "https://dummyimage.com/100x100"
     } = {}
 }) => {
@@ -17,7 +17,7 @@ const ProjectItemSmall = ({
                 />
                 <div className="project-item__body">
                     <p className="project-item__title">{name}</p>
-                    <p className="project-item__text">{description}</p>
+                    <p className="project-item__text">{headline}</p>
                 </div>
             </div>
         </div>

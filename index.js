@@ -26,22 +26,35 @@ const authMiddleware = (req, res, next) => {
 }
 
 // Getting the apps for homepage
-app.get("/", async (req, res) => {
+app.get("/home", async (req, res) => {
     try {
         const featured = await db.Project.aggregate([
-            { $sample: { size: 4 } },
-            { $project: { name: 1, description: 1, icon: 1 } }
+            { $sample: { size: 6 } },
+            { $project: { name: 1, headline: 1, icon: 1 } }
         ])
         const trending = await db.Project.find({}, "name icon headline")
             .sort({ views: -1 })
-            .limit(8)
+            .limit(6)
         const recent = await db.Project.find({}, "name icon headline")
             .sort({ createdAt: -1 })
-            .limit(8)
+            .limit(6)
         res.status(200).json({
             featured,
             trending,
             recent
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+app.get("/category", async (req, res) => {
+    try {
+        const categories = await db.Category.aggregate([
+            { $sample: { size: 10 } }
+        ])
+        res.status(200).json({
+            categories
         })
     } catch (err) {
         next(err)
@@ -154,8 +167,7 @@ app.post("/signin", async (req, res, next) => {
 
 app.use(function(err, req, res, next) {
     res.status(err.status || 500).json({
-        type: err.type || "INTERNAL_ERROR",
-        message: err.message || "Oops! Something went wrong :("
+        type: err.type || "INTERNAL_ERROR"
     })
 })
 

@@ -64,6 +64,32 @@
     background-color: #3f85b3;
 }
 
+.btn-fill:hover {
+    color: white;
+    background-color: #29709b;
+}
+
+.btn-fill:focus {
+    box-shadow: 0 0 0 0.2rem rgba(63, 133, 179, 0.5) !important;
+    color: white;
+    background-color: #3f85b3;
+}
+
+.btn-fill {
+    color: white;
+    background-color: #3f85b3;
+}
+
+.dropdown-item:active {
+    color: white;
+    background-color: #3f85b3;
+    cursor: pointer;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
 .project-item {
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 6px;

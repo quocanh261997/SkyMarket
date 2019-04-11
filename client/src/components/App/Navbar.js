@@ -34,7 +34,7 @@ class Navbar extends Component {
                 <Link
                     to="/signin"
                     className="btn btn-outline"
-                    style={{ border: "none", marginRight: 5 }}>
+                    style={{ border: "none", marginRight: 10 }}>
                     Sign In
                 </Link>
             )
@@ -46,12 +46,26 @@ class Navbar extends Component {
                         flexDirection: "row",
                         alignItems: "center"
                     }}>
-                    <span>Hello {this.props.username}!</span>
-                    <button
-                        className="btn btn-outline"
-                        onClick={this.props.signOut}>
-                        Sign Out
-                    </button>
+                    <div className="dropdown">
+                        <btn
+                            style={{ width: 158, marginRight: 10 }}
+                            className="btn btn-outline dropdown-toggle"
+                            id="dropdownUser"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                            Hello {this.props.username}!
+                        </btn>
+                        <div
+                            className="dropdown-menu"
+                            aria-labelledby="dropdownUser">
+                            <span
+                                className="dropdown-item"
+                                onClick={this.props.signOut}>
+                                Sign Out
+                            </span>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -77,7 +91,7 @@ class Navbar extends Component {
                         <Link
                             to="/"
                             className="btn btn-outline"
-                            style={{ border: "none", marginRight: 5 }}>
+                            style={{ border: "none", marginRight: 10 }}>
                             Browse
                         </Link>
                         {this.renderUsername()}
