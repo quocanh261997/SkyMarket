@@ -71,7 +71,7 @@ class SignIn extends Component {
                     </div>
                     <button
                         type="submit"
-                        className="btn btn-primary btn-block"
+                        className="btn btn-fill btn-block"
                         style={{ marginBottom: "2em" }}>
                         Submit
                     </button>

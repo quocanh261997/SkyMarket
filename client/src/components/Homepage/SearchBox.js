@@ -16,13 +16,13 @@ class SearchBox extends Component {
         })
     }
 
-    getInfo = async () => {
-        const response = await api.get(`/search?q=${this.state.q}`)
-        console.log(response)
-        this.setState({
-            results: response.data.projects,
-            display: true
-        })
+    getInfo = () => {
+        api("get", `/search?q=${this.state.q}`).then(({ projects }) =>
+            this.setState({
+                results: projects,
+                display: true
+            })
+        )
     }
 
     handleChange = e => {
@@ -32,7 +32,7 @@ class SearchBox extends Component {
         else
             this.timeout = setTimeout(() => {
                 if (this.state.q === text) this.getInfo()
-            }, 500)
+            }, 200)
     }
 
     componentWillUnmount() {
@@ -61,7 +61,20 @@ class SearchBox extends Component {
                     }}
                     className="dropdown-menu w-100">
                     {this.state.results.map(i => (
-                        <li className="dropdown-item">{i.name}</li>
+                        <li
+                            className="dropdown-item"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between"
+                            }}>
+                            {i.name}
+                            <img
+                                style={{ width: 25 }}
+                                src={i.icon}
+                                alt="Icon"
+                            />
+                        </li>
                     ))}
                 </ul>
             </div>

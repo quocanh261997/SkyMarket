@@ -1,18 +1,20 @@
 const db = require("./models")
 
-const projects = require("./projects.json")
+const projects = require("./models/data/projects.json")
 
-for (let project of projects) {
-    let ru = Math.floor(Math.random() * 4) + 1,
-        rc = Math.floor(Math.random() * 3) + 1
+console.log(projects.length)
 
-    db.User.aggregate([{ $sample: { size: ru } }]).then(users => {
-        db.Category.aggregate([{ $sample: { size: rc } }]).then(cates => {
-            db.Project.create({
-                ...project,
-                developers: users.map(u => u._id),
-                categories: cates.map(c => c._id)
-            })
-        })
+let promises = projects.map(async project => {
+    let ru = Math.floor(Math.random() * 4) + 1, // number of developers
+        rc = Math.floor(Math.random() * 4) + 1 // number of categories
+
+    let users = await db.User.aggregate([{ $sample: { size: ru } }])
+    let cates = await db.Category.aggregate([{ $sample: { size: rc } }])
+    await db.Project.create({
+        ...project,
+        developers: users.map(u => u._id),
+        categories: cates.map(c => c._id)
     })
-}
+})
+
+Promise.all(promises)

@@ -9,7 +9,7 @@ import {
 
 export const fetchProjects = () => {
     return async dispatch => {
-        const response = await api.get("/")
+        const response = await api("get", "/")
         dispatch({
             type: FETCH_PROJECTS,
             payload: response
@@ -19,7 +19,7 @@ export const fetchProjects = () => {
 
 export const fetchProjectCategory = category => {
     return async dispatch => {
-        const response = await api.get(`/category/${category}`)
+        const response = await api("get", `/category/${category}`)
         dispatch({
             type: FETCH_PROJECT_CATEGORY,
             payload: response
@@ -29,7 +29,7 @@ export const fetchProjectCategory = category => {
 
 export const fetchProjectName = name => {
     return async dispatch => {
-        const response = await api.get("/search", {
+        const response = await api("get", "/search", {
             params: {
                 q: name
             }
@@ -43,41 +43,41 @@ export const fetchProjectName = name => {
 
 export const signUp = (username, email, password) => {
     return dispatch => {
-        return api
-            .post("/signup", {
-                username,
-                email,
-                password
-            })
-            .then(({ data: { token, ...payload } }) => {
+        return api("post", "/signup", {
+            username,
+            email,
+            password
+        })
+            .then(({ token, ...payload }) => {
                 setAuthHeader(token)
+                localStorage.setItem("token", token)
                 dispatch({
                     type: SIGN_IN,
                     payload
                 })
             })
             .catch(error => {
-                throw new Error(error.response.data.type)
+                throw new Error(error.type)
             })
     }
 }
 
 export const signIn = (userInput, password) => {
     return async dispatch => {
-        return api
-            .post("/signin", {
-                userInput,
-                password
-            })
-            .then(({ data: { token, ...payload } }) => {
+        return api("post", "/signin", {
+            userInput,
+            password
+        })
+            .then(({ token, ...payload }) => {
                 setAuthHeader(token)
+                localStorage.setItem("token", token)
                 dispatch({
                     type: SIGN_IN,
                     payload
                 })
             })
             .catch(error => {
-                throw new Error(error.response.data.type)
+                throw new Error(error.type)
             })
     }
 }
@@ -85,6 +85,7 @@ export const signIn = (userInput, password) => {
 export const signOut = () => {
     return dispatch => {
         removeAuthHeader()
+        localStorage.removeItem("token")
         dispatch({
             type: SIGN_OUT
         })
