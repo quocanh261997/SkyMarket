@@ -20,7 +20,6 @@ const authMiddleware = (req, res, next) => {
     if (token) {
         const { _id } = jwt.verify(token, process.env.SECRET_KEY)
         console.log(_id)
-
         req._id = _id
         next()
     }
