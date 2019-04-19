@@ -34,8 +34,8 @@ class App extends Component {
                     <Route exact path="/" component={Homepage} />
                     <Route path="/signin" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
-                    <Route path="/:id" component={Project} />
-                    <Route path="/category/:id" component={Category} />
+                    <Route path="/projects/:id" component={Project} />
+                    <Route path="/categories/:id" component={Category} />
                 </BrowserRouter>
             </Provider>
         )

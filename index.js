@@ -19,7 +19,6 @@ const authMiddleware = (req, res, next) => {
     const token = authHeader.split(" ")[1]
     if (token) {
         const { _id } = jwt.verify(token, process.env.SECRET_KEY)
-        console.log(_id)
         req._id = _id
         next()
     }
@@ -48,7 +47,7 @@ app.get("/home", async (req, res) => {
     }
 })
 
-app.get("/category", async (req, res) => {
+app.get("/categories", async (req, res) => {
     try {
         const categories = await db.Category.aggregate([
             { $sample: { size: 10 } }
@@ -62,9 +61,10 @@ app.get("/category", async (req, res) => {
 })
 
 // Getting the list of projects that have the queried category
-app.get("/category/:id", async (req, res, next) => {
+app.get("/categories/:id", async (req, res, next) => {
     try {
         const id = req.params.id
+        const category = await db.Category.findById(id, "photo")
         const projects = await db.Project.find(
             {
                 categories: id
@@ -75,14 +75,12 @@ app.get("/category/:id", async (req, res, next) => {
             projects
         })
     } catch (err) {
-        console.log(err.message)
-
         next(err)
     }
 })
 
 // Getting the list of projects based on queried name
-app.get("/search", async (req, res, next) => {
+app.get("/projects/search", async (req, res, next) => {
     try {
         const q = req.query.q
         const projects = await db.Project.find(
@@ -93,6 +91,23 @@ app.get("/search", async (req, res, next) => {
         ).limit(5)
         res.status(200).json({
             projects
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+app.get("/projects/:id", async (req, res, next) => {
+    try {
+        const id = req.params.id
+        const project = await db.Project.findById(
+            id,
+            "description photos views stars"
+        )
+            .populate("categories", "name")
+            .populate("developers", "username")
+        res.status(200).json({
+            project
         })
     } catch (err) {
         next(err)
@@ -162,11 +177,6 @@ app.post("/signin", async (req, res, next) => {
     }
 })
 
-// function isEmail(email) {
-//     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-//     return re.test(email)
-// }
-
 app.use(function(err, req, res, next) {
     res.status(err.status || 500).json({
         type: err.type || "INTERNAL_ERROR"
@@ -177,3 +187,5 @@ app.listen(PORT, err => {
     if (err) throw err
     console.log(`> Ready on http://localhost:${PORT}`)
 })
+
+module.exports = app
