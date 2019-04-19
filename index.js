@@ -82,7 +82,7 @@ app.get("/category/:id", async (req, res, next) => {
 })
 
 // Getting the list of projects based on queried name
-app.get("/search", async (req, res, next) => {
+app.get("/project/search", async (req, res, next) => {
     try {
         const q = req.query.q
         const projects = await db.Project.find(
@@ -93,6 +93,42 @@ app.get("/search", async (req, res, next) => {
         ).limit(5)
         res.status(200).json({
             projects
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// Getting the list of users based on queried name
+app.get("/user/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const users = await db.User.find(
+            {
+                username: { $regex: q, $options: "i" }
+            },
+            "name photo"
+        ).limit(5)
+        res.status(200).json({
+            users
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// Getting the list of categories based on queried name
+app.get("/category/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const categories = await db.Category.find(
+            {
+                name: { $regex: q, $options: "i" }
+            },
+            "name photo"
+        ).limit(5)
+        res.status(200).json({
+            categories
         })
     } catch (err) {
         next(err)
@@ -160,6 +196,10 @@ app.post("/signin", async (req, res, next) => {
             type: "INVALID_EMAIL"
         })
     }
+})
+
+app.post("/user/:id/upload", async (req, res, next)=>{
+    const {}
 })
 
 // function isEmail(email) {

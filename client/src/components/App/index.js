@@ -9,6 +9,7 @@ import SignUp from "../Auth/SignUp"
 import Category from "../Category"
 import Homepage from "../Homepage"
 import Project from "../Project"
+import Upload from "../Upload"
 import "./index.css"
 import Navbar from "./Navbar"
 
@@ -36,6 +37,7 @@ class App extends Component {
                     <Route path="/signup" component={SignUp} />
                     <Route path="/:id" component={Project} />
                     <Route path="/category/:id" component={Category} />
+                    <Route path="/upload" component={Upload} />
                 </BrowserRouter>
             </Provider>
         )

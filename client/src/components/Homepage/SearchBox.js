@@ -17,7 +17,7 @@ class SearchBox extends Component {
     }
 
     getInfo = () => {
-        api("get", `/search?q=${this.state.q}`).then(({ projects }) =>
+        api("get", `/project/search?q=${this.state.q}`).then(({ projects }) =>
             this.setState({
                 results: projects,
                 display: true
@@ -59,7 +59,8 @@ class SearchBox extends Component {
                         display:
                             display && results.length > 0 ? "block" : "none"
                     }}
-                    className="dropdown-menu w-100">
+                    className="dropdown-menu w-100"
+                >
                     {this.state.results.map(i => (
                         <li
                             className="dropdown-item"
@@ -68,7 +69,8 @@ class SearchBox extends Component {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between"
-                            }}>
+                            }}
+                        >
                             {i.name}
                             <img
                                 style={{ width: 25 }}
