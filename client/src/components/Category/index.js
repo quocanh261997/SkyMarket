@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
-import ProjectItemLarge from "../Homepage/ProjectItemLarge"
+import ProjectItem from "../Homepage/ProjectItem"
 
 class Category extends Component {
     state = {
@@ -9,7 +9,7 @@ class Category extends Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
-        api("get", `/category/${id}`).then(({ projects }) =>
+        api("get", `/categories/${id}`).then(({ projects }) =>
             this.setState({ projects })
         )
     }
@@ -35,8 +35,12 @@ class Category extends Component {
                     />
                 </div>
                 <div className="row mx-auto">
-                    {this.state.projects.map(project => (
-                        <ProjectItemLarge result={project} />
+                    {this.state.projects.map((project, index) => (
+                        <ProjectItem
+                            key={project ? project._id : index}
+                            project={project}
+                            size="large"
+                        />
                     ))}
                 </div>
             </div>

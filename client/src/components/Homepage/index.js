@@ -1,8 +1,7 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
 import Landing from "../../static/Landing.png"
-import ProjectItemLarge from "./ProjectItemLarge"
-import ProjectItemSmall from "./ProjectItemSmall"
+import ProjectItem from "./ProjectItem"
 import SearchBox from "./SearchBox"
 import Sidebar from "./Sidebar"
 
@@ -50,20 +49,31 @@ class Homepage extends Component {
                     <div className="col-md-8 mt-4">
                         <h4>Featured Projects</h4>
                         <div className="row">
-                            {this.state.featured.map(project => (
-                                <ProjectItemLarge result={project} />
+                            {this.state.featured.map((project, index) => (
+                                <ProjectItem
+                                    key={project ? project._id : index}
+                                    project={project}
+                                />
                             ))}
                         </div>
                         <h4>Trending Projects</h4>
                         <div className="row">
-                            {this.state.trending.map(project => (
-                                <ProjectItemSmall result={project} />
+                            {this.state.trending.map((project, index) => (
+                                <ProjectItem
+                                    key={project ? project._id : index}
+                                    project={project}
+                                    size="small"
+                                />
                             ))}
                         </div>
                         <h4>Recent Projects</h4>
                         <div className="row">
-                            {this.state.recent.map(project => (
-                                <ProjectItemSmall result={project} />
+                            {this.state.recent.map((project, index) => (
+                                <ProjectItem
+                                    key={project ? project._id : index}
+                                    project={project}
+                                    size="small"
+                                />
                             ))}
                         </div>
                     </div>

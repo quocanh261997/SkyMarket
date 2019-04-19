@@ -11,13 +11,11 @@ class SearchBox extends Component {
     timeout = null
 
     componentDidMount() {
-        window.addEventListener("click", () => {
-            this.setState({ display: false })
-        })
+        window.addEventListener("click", this.hideSearch)
     }
 
     getInfo = () => {
-        api("get", `/project/search?q=${this.state.q}`).then(({ projects }) =>
+        api("get", `/projects/search?q=${this.state.q}`).then(({ projects }) =>
             this.setState({
                 results: projects,
                 display: true
@@ -35,8 +33,13 @@ class SearchBox extends Component {
             }, 200)
     }
 
+    hideSearch = () => {
+        this.setState({ display: false })
+    }
+
     componentWillUnmount() {
         clearTimeout(this.timeout)
+        window.removeEventListener("click", this.hideSearch)
     }
 
     render() {
@@ -59,22 +62,21 @@ class SearchBox extends Component {
                         display:
                             display && results.length > 0 ? "block" : "none"
                     }}
-                    className="dropdown-menu w-100"
-                >
-                    {this.state.results.map(i => (
+                    className="dropdown-menu w-100">
+                    {this.state.results.map(project => (
                         <li
+                            key={project._id}
                             className="dropdown-item"
                             style={{
                                 padding: "10px 20px",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between"
-                            }}
-                        >
-                            {i.name}
+                            }}>
+                            {project.name}
                             <img
                                 style={{ width: 25 }}
-                                src={i.icon}
+                                src={project.icon}
                                 alt="Icon"
                             />
                         </li>
