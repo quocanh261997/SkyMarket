@@ -80,11 +80,7 @@ app.get("/categories/:id", async (req, res, next) => {
 })
 
 // Getting the list of projects based on queried name
-<<<<<<< HEAD
-app.get("/project/search", async (req, res, next) => {
-=======
 app.get("/projects/search", async (req, res, next) => {
->>>>>>> 96d2042bfcfbf072abcf28d1521c3553c3e1442e
     try {
         const q = req.query.q
         const projects = await db.Project.find(
@@ -101,38 +97,6 @@ app.get("/projects/search", async (req, res, next) => {
     }
 })
 
-<<<<<<< HEAD
-// Getting the list of users based on queried name
-app.get("/user/search", async (req, res, next) => {
-    try {
-        const q = req.query.q
-        const users = await db.User.find(
-            {
-                username: { $regex: q, $options: "i" }
-            },
-            "name photo"
-        ).limit(5)
-        res.status(200).json({
-            users
-        })
-    } catch (err) {
-        next(err)
-    }
-})
-
-// Getting the list of categories based on queried name
-app.get("/category/search", async (req, res, next) => {
-    try {
-        const q = req.query.q
-        const categories = await db.Category.find(
-            {
-                name: { $regex: q, $options: "i" }
-            },
-            "name photo"
-        ).limit(5)
-        res.status(200).json({
-            categories
-=======
 app.get("/projects/:id", async (req, res, next) => {
     try {
         const id = req.params.id
@@ -144,7 +108,6 @@ app.get("/projects/:id", async (req, res, next) => {
             .populate("developers", "username")
         res.status(200).json({
             project
->>>>>>> 96d2042bfcfbf072abcf28d1521c3553c3e1442e
         })
     } catch (err) {
         next(err)
@@ -212,6 +175,39 @@ app.post("/signin", async (req, res, next) => {
             type: "INVALID_EMAIL"
         })
     }
+})
+
+app.post("/projects", async (req, res, next) => {
+    const {
+        name,
+        headline,
+        description,
+        icon = "http://www.colegioexpressao.com/assets/images/avatar-2.png",
+        photos = [
+            "https://www.hounddogdigital.com/wp-content/uploads/2017/04/mobile_apps.jpg"
+        ],
+        externals = ["https://github.com"],
+        categories,
+        developers = ["5cae98ac826e13213117724e"]
+    } = req.body
+    db.Project.create({
+        name,
+        headline,
+        description,
+        icon,
+        photos,
+        views: 0,
+        stars: 0,
+        externals,
+        categories,
+        developers
+    })
+        .then(data => {
+            res.status(201).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
 })
 
 app.use(function(err, req, res, next) {
