@@ -47,18 +47,21 @@ class Navbar extends Component {
                         alignItems: "center"
                     }}>
                     <div className="dropdown">
-                        <btn
-                            style={{ width: 158, marginRight: 10 }}
+                        <button
+                            style={{ marginRight: 10 }}
                             className="btn btn-outline dropdown-toggle"
                             id="dropdownUser"
                             data-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
                             Hello {this.props.username}!
-                        </btn>
+                        </button>
                         <div
                             className="dropdown-menu"
                             aria-labelledby="dropdownUser">
+                            <Link to="/upload" className="dropdown-item">
+                                Upload
+                            </Link>
                             <span
                                 className="dropdown-item"
                                 onClick={this.props.signOut}>
