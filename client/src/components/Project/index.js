@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
 import api from "../../libs/api"
 
 class Project extends Component {
@@ -18,12 +17,15 @@ class Project extends Component {
     render() {
         const name = this.props.location.state.name,
             headline = this.props.location.state.headline,
-            icon = this.props.location.state.icon,
-            lastPage = this.props.location.state.lastPage
+            icon = this.props.location.state.icon
 
         return (
             <div className="container m-auto">
-                <Link to={lastPage}>Back</Link>
+                <button
+                    className="btn btn-outline"
+                    onClick={() => this.props.history.goBack()}>
+                    Back
+                </button>
                 <div className="row">
                     <div className="col-md-4">
                         <img

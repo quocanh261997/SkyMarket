@@ -7,15 +7,12 @@ class ProjectItem extends PureComponent {
     }
 
     componentDidMount() {
-        if (this.props.colorThief) {
-            this.props.colorThief.getColorAsync(
-                this.props.project.icon,
-                color =>
-                    this.setState({
-                        backgroundColor: `rgba(${color.join(",")},0.5)`
-                    })
-            )
-        }
+        if (this.props.project)
+            window
+                .getColor(this.props.project.icon)
+                .then(color =>
+                    this.setState({ backgroundColor: `rgba(${color},0.5)` })
+                )
     }
 
     renderProject = () => {
@@ -98,8 +95,7 @@ class ProjectItem extends PureComponent {
             this.props.history.push(`/projects/${_id}`, {
                 name,
                 headline,
-                icon,
-                lastPage: this.props.location.pathname
+                icon
             })
     }
 

@@ -24,15 +24,26 @@ class Category extends Component {
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "center",
-                        marginTop: "1em",
-                        marginBottom: "1em"
+                        margin: "1em 0 1em 0"
                     }}>
-                    <h3 style={{ margin: 0 }}>{name}</h3>
-                    <img
-                        style={{ width: 35, marginLeft: 10 }}
-                        src={photo}
-                        alt="Category"
-                    />
+                    <button
+                        className="btn btn-outline"
+                        onClick={() => this.props.history.goBack()}>
+                        Back
+                    </button>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
+                        <h3 style={{ margin: 0 }}>{name}</h3>
+                        <img
+                            style={{ width: 35, marginLeft: 10 }}
+                            src={photo}
+                            alt="Category"
+                        />
+                    </div>
                 </div>
                 <div className="row mx-auto">
                     {this.state.projects.map((project, index) => (

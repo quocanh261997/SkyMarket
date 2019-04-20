@@ -137,15 +137,15 @@
 
     .project-item:hover {
         box-shadow: none;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        margin: -1px;
+        border-radius: 8px;
+        background-color: #eeeeee;
         border-radius: 8px;
     }
 
     .project-item__image__background {
         width: 60px;
         height: 60px;
-        background-color: transparent;
+        background-color: transparent !important;
     }
 }
 
