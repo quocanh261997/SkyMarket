@@ -64,7 +64,7 @@ class Project extends Component {
                                         className="img-fluid"
                                         key={index}
                                         src={url}
-                                        alt="Photo"
+                                        alt="Project"
                                     />
                                 </div>
                             ))}

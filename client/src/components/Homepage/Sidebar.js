@@ -24,26 +24,16 @@ class Sidebar extends Component {
         return (
             <div>
                 <h3>Categories</h3>
-                <ul id="sidebar" className="list-group collapse">
-                    {this.state.categories.length > 0 &&
-                        this.state.categories.map(cate => (
-                            <li
-                                key={cate._id}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between"
-                                }}
-                                className="list-group-item sidebar-item"
-                                onClick={() => this.handleClick(cate)}>
-                                {cate.name}
-                                <img
-                                    style={{ width: 30 }}
-                                    src={cate.photo}
-                                    alt="Category"
-                                />
-                            </li>
-                        ))}
+                <ul id="sidebar" className="sidebar collapse">
+                    {this.state.categories.map(cate => (
+                        <li
+                            key={cate._id}
+                            className="sidebar-item"
+                            onClick={() => this.handleClick(cate)}>
+                            {cate.name}
+                            <img src={cate.photo} alt="Category" />
+                        </li>
+                    ))}
                 </ul>
             </div>
         )

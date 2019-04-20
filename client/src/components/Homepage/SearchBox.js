@@ -3,7 +3,7 @@ import api from "../../libs/api"
 
 class SearchBox extends Component {
     state = {
-        q: "",
+        query: "",
         results: [],
         display: true
     }
@@ -15,21 +15,22 @@ class SearchBox extends Component {
     }
 
     getInfo = () => {
-        api("get", `/projects/search?q=${this.state.q}`).then(({ projects }) =>
-            this.setState({
-                results: projects,
-                display: true
-            })
+        api("get", `/projects/search?q=${this.state.query}`).then(
+            ({ projects }) =>
+                this.setState({
+                    results: projects,
+                    display: true
+                })
         )
     }
 
     handleChange = e => {
         const text = e.target.value
-        this.setState({ q: text })
+        this.setState({ query: text })
         if (text.length === 0) this.setState({ results: [] })
         else
             this.timeout = setTimeout(() => {
-                if (this.state.q === text) this.getInfo()
+                if (this.state.query === text) this.getInfo()
             }, 200)
     }
 
@@ -43,18 +44,17 @@ class SearchBox extends Component {
     }
 
     render() {
-        const { q, results, display } = this.state
+        const { query, results, display } = this.state
         return (
             <div className="dropdown">
                 <input
-                    id="searchDropdown"
                     type="text"
                     className="form-control dropdown-toggle"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     placeholder="Search Projects"
                     autoComplete="off"
-                    value={q}
+                    value={query}
                     onChange={this.handleChange}
                 />
                 <ul
@@ -64,21 +64,9 @@ class SearchBox extends Component {
                     }}
                     className="dropdown-menu w-100">
                     {this.state.results.map(project => (
-                        <li
-                            key={project._id}
-                            className="dropdown-item"
-                            style={{
-                                padding: "10px 20px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between"
-                            }}>
+                        <li key={project._id} className="dropdown-item">
                             {project.name}
-                            <img
-                                style={{ width: 25 }}
-                                src={project.icon}
-                                alt="Icon"
-                            />
+                            <img src={project.icon} alt="Icon" />
                         </li>
                     ))}
                 </ul>

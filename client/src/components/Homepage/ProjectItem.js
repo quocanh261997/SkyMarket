@@ -2,6 +2,22 @@ import React, { PureComponent } from "react"
 import { withRouter } from "react-router-dom"
 
 class ProjectItem extends PureComponent {
+    state = {
+        backgroundColor: "#eeeeee"
+    }
+
+    componentDidMount() {
+        if (this.props.colorThief) {
+            this.props.colorThief.getColorAsync(
+                this.props.project.icon,
+                color =>
+                    this.setState({
+                        backgroundColor: `rgba(${color.join(",")},0.5)`
+                    })
+            )
+        }
+    }
+
     renderProject = () => {
         const {
             project: {
@@ -11,6 +27,7 @@ class ProjectItem extends PureComponent {
             } = {},
             size
         } = this.props
+        const { backgroundColor } = this.state
         if (size === "small")
             return (
                 <div
@@ -35,7 +52,9 @@ class ProjectItem extends PureComponent {
                     onClick={this.handleClick}
                     className="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div className="project-item">
-                        <div className="project-item__image__background">
+                        <div
+                            style={{ backgroundColor }}
+                            className="project-item__image__background">
                             <img
                                 className="project-item__image"
                                 src={icon}
@@ -55,7 +74,9 @@ class ProjectItem extends PureComponent {
                     onClick={this.handleClick}
                     className="col-lg-4 col-sm-6 mb-4">
                     <div className="project-item">
-                        <div className="project-item__image__background">
+                        <div
+                            style={{ backgroundColor }}
+                            className="project-item__image__background">
                             <img
                                 className="project-item__image"
                                 src={icon}

@@ -18,6 +18,7 @@ class Homepage extends Component {
                 ...data
             })
         })
+        this.colorThief = new window.ColorThief()
     }
 
     render() {
@@ -53,6 +54,7 @@ class Homepage extends Component {
                                 <ProjectItem
                                     key={project ? project._id : index}
                                     project={project}
+                                    colorThief={this.colorThief}
                                 />
                             ))}
                         </div>
