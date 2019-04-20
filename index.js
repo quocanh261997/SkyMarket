@@ -177,6 +177,39 @@ app.post("/signin", async (req, res, next) => {
     }
 })
 
+app.post("/projects", async (req, res, next) => {
+    const {
+        name,
+        headline,
+        description,
+        icon = "http://www.colegioexpressao.com/assets/images/avatar-2.png",
+        photos = [
+            "https://www.hounddogdigital.com/wp-content/uploads/2017/04/mobile_apps.jpg"
+        ],
+        externals = ["https://github.com"],
+        categories,
+        developers = ["5cae98ac826e13213117724e"]
+    } = req.body
+    db.Project.create({
+        name,
+        headline,
+        description,
+        icon,
+        photos,
+        views: 0,
+        stars: 0,
+        externals,
+        categories,
+        developers
+    })
+        .then(data => {
+            res.status(201).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
+})
+
 app.use(function(err, req, res, next) {
     res.status(err.status || 500).json({
         type: err.type || "INTERNAL_ERROR"
