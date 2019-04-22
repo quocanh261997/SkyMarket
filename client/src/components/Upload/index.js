@@ -1,7 +1,9 @@
 import firebase from "firebase"
 import React, { Component } from "react"
 import FileUploader from "react-firebase-file-uploader"
+import api from "../../libs/api"
 import Upload from "../../static/Upload.png"
+import SearchBox from "../Homepage/SearchBox"
 
 const config = {
     apiKey: "AIzaSyB53Nb6qYzyTPO-oEsstxNaGajFGjw4Sic",
@@ -17,7 +19,19 @@ firebase.initializeApp(config)
 export default class index extends Component {
     state = {
         isUploading: false,
-        iconURL: ""
+        iconURL: "",
+        name: "",
+        headline: "",
+        description: "",
+        selectedOptions: []
+    }
+
+    getDevelopers = value => {
+        return api("get", `/users/search?q=${value}`).then(({ users }) => users)
+    }
+
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     handleSubmit = e => {
@@ -35,6 +49,7 @@ export default class index extends Component {
     }
 
     render() {
+        const { name, headline, description, selectedOptions } = this.state
         return (
             <div className="container" onSubmit={this.handleSubmit}>
                 <form>
@@ -84,9 +99,12 @@ export default class index extends Component {
                         <label>Project Name</label>
                         <input
                             type="text"
+                            name="name"
                             maxLength={20}
                             className="form-control"
                             placeholder="Awesome Project"
+                            value={name}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <div className="form-group">
@@ -96,14 +114,51 @@ export default class index extends Component {
                         </small>
                         <input
                             type="text"
+                            name="headline"
                             maxLength={50}
                             className="form-control"
                             placeholder="This project does fantastic things!"
+                            value={headline}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Developers</label>
+                        <SearchBox
+                            isMulti
+                            selectedOptions={selectedOptions}
+                            loadOptions={this.getDevelopers}
+                            optionKey={o => o._id}
+                            optionLabel={o => o.username}
+                            optionImg={o => o.photo}
+                            placeholder="Search"
+                            onSelect={o =>
+                                this.setState(prev => ({
+                                    selectedOptions: [
+                                        ...prev.selectedOptions,
+                                        o
+                                    ]
+                                }))
+                            }
+                            onUnselect={o =>
+                                this.setState(prev => ({
+                                    selectedOptions: prev.selectedOptions.filter(
+                                        ({ _id }) => _id !== o._id
+                                    )
+                                }))
+                            }
                         />
                     </div>
                     <div className="form-group">
                         <label>Description</label>
-                        <textarea className="form-control" rows="3" />
+                        <textarea
+                            className="form-control"
+                            name="description"
+                            rows="3"
+                            value={description}
+                            onChange={this.handleChange}
+                            placeholder="Show how awesome your project is!"
+                        />
                     </div>
                     <input type="submit" className="btn btn-fill" />
                 </form>

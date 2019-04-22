@@ -20,6 +20,12 @@ class Homepage extends Component {
         })
     }
 
+    getProjects = query => {
+        return api("get", `/projects/search?q=${query}`).then(
+            ({ projects }) => projects
+        )
+    }
+
     render() {
         return (
             <div>
@@ -30,7 +36,28 @@ class Homepage extends Component {
                                 <h2 style={{ color: "white" }}>
                                     Showcase your projects with SkyMarket
                                 </h2>
-                                <SearchBox />
+                                <SearchBox
+                                    loadOptions={this.getProjects}
+                                    optionKey={o => o._id}
+                                    optionLabel={o => o.name}
+                                    optionImg={o => o.icon}
+                                    placeholder="Search Projects"
+                                    onSelect={({
+                                        _id,
+                                        name,
+                                        headline,
+                                        icon
+                                    }) => {
+                                        this.props.history.push(
+                                            `/projects/${_id}`,
+                                            {
+                                                name,
+                                                headline,
+                                                icon
+                                            }
+                                        )
+                                    }}
+                                />
                             </div>
                             <div className="col-md-6 text-center">
                                 <img

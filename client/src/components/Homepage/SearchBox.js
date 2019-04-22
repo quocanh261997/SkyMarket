@@ -1,10 +1,10 @@
 import React, { Component } from "react"
-import api from "../../libs/api"
 
 class SearchBox extends Component {
     state = {
         query: "",
-        results: [],
+        options: [],
+        selectedOptions: [],
         display: true
     }
 
@@ -14,24 +14,20 @@ class SearchBox extends Component {
         window.addEventListener("click", this.hideSearch)
     }
 
-    getInfo = () => {
-        api("get", `/projects/search?q=${this.state.query}`).then(
-            ({ projects }) =>
-                this.setState({
-                    results: projects,
-                    display: true
-                })
-        )
-    }
-
     handleChange = e => {
         const text = e.target.value
         this.setState({ query: text })
-        if (text.length === 0) this.setState({ results: [] })
+        if (text.length === 0) this.setState({ options: [] })
         else
             this.timeout = setTimeout(() => {
-                if (this.state.query === text) this.getInfo()
-            }, 200)
+                if (this.state.query === text)
+                    this.props.loadOptions(text).then(options =>
+                        this.setState({
+                            options,
+                            display: true
+                        })
+                    )
+            }, 300)
     }
 
     hideSearch = () => {
@@ -43,30 +39,79 @@ class SearchBox extends Component {
         window.removeEventListener("click", this.hideSearch)
     }
 
-    render() {
-        const { query, results, display } = this.state
-        return (
-            <div className="dropdown">
+    renderInput = () => {
+        const { query } = this.state
+        if (this.props.isMulti)
+            return (
+                <div className="form-control searchbox">
+                    {this.props.selectedOptions.length > 0 && (
+                        <ul className="searchbox-options">
+                            {this.props.selectedOptions.map(
+                                o => (
+                                    <li
+                                        key={this.props.optionKey(o)}
+                                        className="searchbox-option">
+                                        <span>{this.props.optionLabel(o)}</span>
+                                        <img
+                                            src={this.props.optionImg(o)}
+                                            alt="Icon"
+                                        />
+                                        <i
+                                            className="fas fa-times"
+                                            onClick={() =>
+                                                this.props.onUnselect(o)
+                                            }
+                                        />
+                                    </li>
+                                ),
+                                this
+                            )}
+                        </ul>
+                    )}
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        className="searchbox-input"
+                        placeholder={this.props.placeholder}
+                        value={query}
+                        onChange={this.handleChange}
+                    />
+                </div>
+            )
+        else
+            return (
                 <input
                     type="text"
-                    className="form-control dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    placeholder="Search Projects"
                     autoComplete="off"
+                    className="form-control searchbox"
+                    placeholder={this.props.placeholder}
                     value={query}
                     onChange={this.handleChange}
                 />
+            )
+    }
+
+    render() {
+        const { options, display } = this.state
+        return (
+            <div className="dropdown">
+                {this.renderInput()}
                 <ul
                     style={{
                         display:
-                            display && results.length > 0 ? "block" : "none"
+                            display && options.length > 0 ? "block" : "none"
                     }}
                     className="dropdown-menu w-100">
-                    {this.state.results.map(project => (
-                        <li key={project._id} className="dropdown-item">
-                            {project.name}
-                            <img src={project.icon} alt="Icon" />
+                    {this.state.options.map(o => (
+                        <li
+                            key={this.props.optionKey(o)}
+                            className="dropdown-item"
+                            onClick={() => {
+                                this.setState({ query: "" })
+                                this.props.onSelect(o)
+                            }}>
+                            {this.props.optionLabel(o)}
+                            <img src={this.props.optionImg(o)} alt="Icon" />
                         </li>
                     ))}
                 </ul>

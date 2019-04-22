@@ -114,6 +114,25 @@ app.get("/projects/:id", async (req, res, next) => {
     }
 })
 
+app.get("/users/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const users = await db.User.find(
+            {
+                username: { $regex: q, $options: "i" }
+            },
+            "username photo"
+        ).limit(5)
+        res.status(200).json({
+            users
+        })
+    } catch (err) {
+        console.log(err)
+
+        next(err)
+    }
+})
+
 app.post("/signup", async (req, res, next) => {
     const {
         username,
@@ -182,7 +201,7 @@ app.post("/projects", async (req, res, next) => {
         name,
         headline,
         description,
-        icon = "http://www.colegioexpressao.com/assets/images/avatar-2.png",
+        icon,
         photos = [
             "https://www.hounddogdigital.com/wp-content/uploads/2017/04/mobile_apps.jpg"
         ],
