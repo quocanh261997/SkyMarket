@@ -1,5 +1,5 @@
 require("dotenv").config()
-const PORT = 5000 || process.env.PORT
+const PORT = 8080 || process.env.PORT
 
 const app = require("express")(),
     db = require("./models"),
@@ -60,11 +60,28 @@ app.get("/categories", async (req, res) => {
     }
 })
 
+app.get("/categories/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const categories = await db.Category.find(
+            {
+                name: { $regex: q, $options: "i" }
+            },
+            "name photo"
+        ).limit(5)
+        res.status(200).json({
+            categories
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
 // Getting the list of projects that have the queried category
 app.get("/categories/:id", async (req, res, next) => {
     try {
         const id = req.params.id
-        const category = await db.Category.findById(id, "photo")
+        const { name, photo } = await db.Category.findById(id)
         const projects = await db.Project.find(
             {
                 categories: id
@@ -72,6 +89,8 @@ app.get("/categories/:id", async (req, res, next) => {
             "name icon headline"
         ).limit(15)
         res.status(200).json({
+            name,
+            photo,
             projects
         })
     } catch (err) {
@@ -102,13 +121,22 @@ app.get("/projects/:id", async (req, res, next) => {
         const id = req.params.id
         const project = await db.Project.findById(
             id,
-            "description photos views stars"
+            "name icon headline description photos views stars"
         )
             .populate("categories", "name")
             .populate("developers", "username")
         res.status(200).json({
             project
         })
+    } catch (err) {
+        next(err)
+    }
+})
+
+app.post("/projects", async (req, res, next) => {
+    try {
+        const { _id } = await db.Project.create(req.body)
+        res.status(201).json({ project: _id })
     } catch (err) {
         next(err)
     }
@@ -127,8 +155,6 @@ app.get("/users/search", async (req, res, next) => {
             users
         })
     } catch (err) {
-        console.log(err)
-
         next(err)
     }
 })
@@ -194,39 +220,6 @@ app.post("/signin", async (req, res, next) => {
             type: "INVALID_EMAIL"
         })
     }
-})
-
-app.post("/projects", async (req, res, next) => {
-    const {
-        name,
-        headline,
-        description,
-        icon,
-        photos = [
-            "https://www.hounddogdigital.com/wp-content/uploads/2017/04/mobile_apps.jpg"
-        ],
-        externals = ["https://github.com"],
-        categories,
-        developers = ["5cae98ac826e13213117724e"]
-    } = req.body
-    db.Project.create({
-        name,
-        headline,
-        description,
-        icon,
-        photos,
-        views: 0,
-        stars: 0,
-        externals,
-        categories,
-        developers
-    })
-        .then(data => {
-            res.status(201).json(data)
-        })
-        .catch(err => {
-            next(err)
-        })
 })
 
 app.use(function(err, req, res, next) {

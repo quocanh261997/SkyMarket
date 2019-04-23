@@ -1,22 +1,22 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
-import ProjectItem from "../Homepage/ProjectItem"
+import ProjectItem from "../components/ProjectItem"
 
 class Category extends Component {
     state = {
-        projects: []
+        name: "",
+        photo: "",
+        projects: [...Array(6)]
     }
 
     componentDidMount() {
         let id = this.props.match.params.id
-        api("get", `/categories/${id}`).then(({ projects }) =>
-            this.setState({ projects })
+        api("get", `/categories/${id}`).then(({ name, photo, projects }) =>
+            this.setState({ name, photo, projects })
         )
     }
 
     render() {
-        const name = this.props.location.state.name,
-            photo = this.props.location.state.photo
         return (
             <div className="container">
                 <div
@@ -37,19 +37,19 @@ class Category extends Component {
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                        <h3 style={{ margin: 0 }}>{name}</h3>
+                        <h3 style={{ margin: 0 }}>{this.state.name}</h3>
                         <img
                             style={{ width: 35, marginLeft: 10 }}
-                            src={photo}
+                            src={this.state.photo}
                             alt="Category"
                         />
                     </div>
                 </div>
                 <div className="row mx-auto">
-                    {this.state.projects.map((project, index) => (
+                    {this.state.projects.map((p, i) => (
                         <ProjectItem
-                            key={project ? project._id : index}
-                            project={project}
+                            key={p ? p._id : i}
+                            project={p}
                             size="large"
                         />
                     ))}

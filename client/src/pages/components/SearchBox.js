@@ -45,28 +45,23 @@ class SearchBox extends Component {
             return (
                 <div className="form-control searchbox">
                     {this.props.selectedOptions.length > 0 && (
-                        <ul className="searchbox-options">
-                            {this.props.selectedOptions.map(
-                                o => (
-                                    <li
-                                        key={this.props.optionKey(o)}
-                                        className="searchbox-option">
-                                        <span>{this.props.optionLabel(o)}</span>
-                                        <img
-                                            src={this.props.optionImg(o)}
-                                            alt="Icon"
-                                        />
-                                        <i
-                                            className="fas fa-times"
-                                            onClick={() =>
-                                                this.props.onUnselect(o)
-                                            }
-                                        />
-                                    </li>
-                                ),
-                                this
-                            )}
-                        </ul>
+                        <div className="searchbox-options">
+                            {this.props.selectedOptions.map(o => (
+                                <div
+                                    key={this.props.optionKey(o)}
+                                    className="searchbox-option">
+                                    <span>{this.props.optionLabel(o)}</span>
+                                    <img
+                                        src={this.props.optionImg(o)}
+                                        alt="Icon"
+                                    />
+                                    <i
+                                        className="fas fa-times"
+                                        onClick={() => this.props.onUnselect(o)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     )}
                     <input
                         type="text"

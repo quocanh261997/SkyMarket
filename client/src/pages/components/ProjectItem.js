@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react"
 import { withRouter } from "react-router-dom"
+// import * as Vibrant from "node-vibrant"
 
 class ProjectItem extends PureComponent {
     state = {
@@ -7,12 +8,13 @@ class ProjectItem extends PureComponent {
     }
 
     componentDidMount() {
-        if (this.props.project)
-            window
-                .getColor(this.props.project.icon)
-                .then(color =>
-                    this.setState({ backgroundColor: `rgba(${color},0.5)` })
-                )
+        // if (this.props.project)
+        //     Vibrant.from(this.props.project.icon)
+        //         .getPalette()
+        //         .then(pallete => pallete.LightVibrant._rgb.join(","))
+        //         .then(color =>
+        //             this.setState({ backgroundColor: `rgba(${color},0.5)` })
+        //         )
     }
 
     renderProject = () => {

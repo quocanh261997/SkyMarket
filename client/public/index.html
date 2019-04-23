@@ -41,12 +41,5 @@
             crossorigin="anonymous"
         ></script>
         <script src="js/vibrant.min.js"></script>
-        <script>
-            function getColor(url) {
-                return Vibrant.from(url)
-                    .getPalette()
-                    .then(pallete => pallete.LightVibrant._rgb.join(","))
-            }
-        </script>
     </body>
 </html>

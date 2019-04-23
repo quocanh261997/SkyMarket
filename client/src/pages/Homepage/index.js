@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
 import Landing from "../../static/Landing.png"
-import ProjectItem from "./ProjectItem"
-import SearchBox from "./SearchBox"
+import ProjectItem from "../components/ProjectItem"
+import SearchBox from "../components/SearchBox"
 import Sidebar from "./Sidebar"
 
 class Homepage extends Component {

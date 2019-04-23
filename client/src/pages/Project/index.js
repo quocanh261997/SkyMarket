@@ -3,6 +3,9 @@ import api from "../../libs/api"
 
 class Project extends Component {
     state = {
+        name: "",
+        headline: "",
+        icon: "",
         photos: [],
         categories: []
     }
@@ -15,10 +18,6 @@ class Project extends Component {
     }
 
     render() {
-        const name = this.props.location.state.name,
-            headline = this.props.location.state.headline,
-            icon = this.props.location.state.icon
-
         return (
             <div className="container m-auto">
                 <button
@@ -34,13 +33,13 @@ class Project extends Component {
                                 width: 100,
                                 borderRadius: 50
                             }}
-                            src={icon}
+                            src={this.state.icon}
                             alt="Icon"
                         />
                         <ul id="sidebar" className="list-group collapse">
-                            {this.state.categories.map(cate => (
+                            {this.state.categories.map(cat => (
                                 <li
-                                    key={cate._id}
+                                    key={cat._id}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -48,14 +47,14 @@ class Project extends Component {
                                     }}
                                     className="list-group-item sidebar-item"
                                     onClick={() => {}}>
-                                    {cate.name}
+                                    {cat.name}
                                 </li>
                             ))}
                         </ul>
                     </div>
                     <div className="col-md-8">
-                        <h2>{name}</h2>
-                        <p>{headline}</p>
+                        <h2>{this.state.name}</h2>
+                        <p>{this.state.headline}</p>
                         <p style={{ marginTop: "2em", textAlign: "justify" }}>
                             {this.state.description}
                         </p>
