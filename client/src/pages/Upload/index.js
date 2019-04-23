@@ -194,7 +194,7 @@ export default class index extends Component {
                                     }}
                                     key={p}
                                     src={p}
-                                    alt="Upload"
+                                    alt=""
                                 />
                             ))}
                             <ImageUploader

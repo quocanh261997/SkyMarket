@@ -31,7 +31,7 @@ class Sidebar extends Component {
                             className="sidebar-item"
                             onClick={() => this.handleClick(cate)}>
                             {cate.name}
-                            <img src={cate.photo} alt="Category" />
+                            <img src={cate.photo} alt="" />
                         </li>
                     ))}
                 </ul>

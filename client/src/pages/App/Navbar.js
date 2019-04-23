@@ -88,7 +88,7 @@ class Navbar extends Component {
                 }>
                 <div className="container">
                     <span className="navbar-brand">
-                        <img style={{ width: 60 }} src={Logo} alt="Logo" />
+                        <img style={{ width: 60 }} src={Logo} alt="" />
                     </span>
                     <div
                         style={{

@@ -41,7 +41,7 @@ class Category extends Component {
                         <img
                             style={{ width: 35, marginLeft: 10 }}
                             src={this.state.photo}
-                            alt="Category"
+                            alt=""
                         />
                     </div>
                 </div>

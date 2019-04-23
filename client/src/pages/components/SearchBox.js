@@ -51,10 +51,7 @@ class SearchBox extends Component {
                                     key={this.props.optionKey(o)}
                                     className="searchbox-option">
                                     <span>{this.props.optionLabel(o)}</span>
-                                    <img
-                                        src={this.props.optionImg(o)}
-                                        alt="Icon"
-                                    />
+                                    <img src={this.props.optionImg(o)} alt="" />
                                     <i
                                         className="fas fa-times"
                                         onClick={() => this.props.onUnselect(o)}
@@ -106,7 +103,7 @@ class SearchBox extends Component {
                                 this.props.onSelect(o)
                             }}>
                             {this.props.optionLabel(o)}
-                            <img src={this.props.optionImg(o)} alt="Icon" />
+                            <img src={this.props.optionImg(o)} alt="" />
                         </li>
                     ))}
                 </ul>

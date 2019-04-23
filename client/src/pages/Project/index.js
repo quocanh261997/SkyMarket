@@ -1,6 +1,6 @@
+import * as Vibrant from "node-vibrant"
 import React, { Component } from "react"
 import api from "../../libs/api"
-import * as Vibrant from "node-vibrant"
 
 class Project extends Component {
     state = {
@@ -58,11 +58,10 @@ class Project extends Component {
                             <img
                                 style={{
                                     height: 100,
-                                    width: 100,
-                                    borderRadius: 50
+                                    width: 100
                                 }}
                                 src={icon}
-                                alt="Project"
+                                alt=""
                             />
                         </div>
                         <div className="sidebar">
@@ -76,7 +75,7 @@ class Project extends Component {
                                         )
                                     }>
                                     <span>{cat.name}</span>
-                                    <img src={cat.photo} alt="Icon" />
+                                    <img src={cat.photo} alt="" />
                                 </div>
                             ))}
                         </div>
@@ -88,13 +87,12 @@ class Project extends Component {
                             {description}
                         </p>
                         <div className="row">
-                            {photos.map((url, index) => (
-                                <div className="col-lg-6 mb-4">
+                            {photos.map((url, i) => (
+                                <div key={i} className="col-lg-6 mb-4">
                                     <img
                                         className="img-fluid"
-                                        key={index}
-                                        src={url}
-                                        alt="Project"
+                                        src="http://dummyimage.com/720x450.jpg"
+                                        alt=""
                                     />
                                 </div>
                             ))}

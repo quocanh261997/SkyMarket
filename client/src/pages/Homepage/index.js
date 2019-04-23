@@ -63,7 +63,7 @@ class Homepage extends Component {
                                 <img
                                     className="homepage-header__image"
                                     src={Landing}
-                                    alt="Landing"
+                                    alt=""
                                 />
                             </div>
                         </div>

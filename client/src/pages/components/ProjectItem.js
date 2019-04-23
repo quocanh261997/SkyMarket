@@ -1,7 +1,6 @@
 import * as Vibrant from "node-vibrant"
 import React, { PureComponent } from "react"
 import { withRouter } from "react-router-dom"
-import Placeholder from "../../static/Placeholder.png"
 
 class ProjectItem extends PureComponent {
     state = {
@@ -23,7 +22,7 @@ class ProjectItem extends PureComponent {
             project: {
                 name = "Awesome Project",
                 headline = "This is a very cool project. Check it out!",
-                icon = Placeholder
+                icon
             } = {},
             size
         } = this.props
@@ -37,7 +36,7 @@ class ProjectItem extends PureComponent {
                         <img
                             className="project-item__image"
                             src={icon}
-                            alt="Project"
+                            alt=""
                         />
                         <div className="project-item__body">
                             <p className="project-item__title">{name}</p>
@@ -58,7 +57,7 @@ class ProjectItem extends PureComponent {
                             <img
                                 className="project-item__image"
                                 src={icon}
-                                alt="Project"
+                                alt=""
                             />
                         </div>
                         <div className="project-item__body">
@@ -80,7 +79,7 @@ class ProjectItem extends PureComponent {
                             <img
                                 className="project-item__image"
                                 src={icon}
-                                alt="Project"
+                                alt=""
                             />
                         </div>
                         <div className="project-item__body">
