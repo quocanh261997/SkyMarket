@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "postinstall": "cd client && npm install",
-        "start": "concurrently --kill-others-on-fail -n server,client -c bgRed.bold,bgBlue.bold \"node index.js\" \"cd client && npm start\"",
+        "start": "concurrently --kill-others-on-fail -n server,client -c bgRed.bold,bgBlue.bold \"PORT=8080 node index.js\" \"cd client && npm start\"",
         "test": "mocha test"
     },
     "author": "",
