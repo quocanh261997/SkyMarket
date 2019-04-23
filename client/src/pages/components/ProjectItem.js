@@ -1,6 +1,7 @@
+import * as Vibrant from "node-vibrant"
 import React, { PureComponent } from "react"
 import { withRouter } from "react-router-dom"
-// import * as Vibrant from "node-vibrant"
+import Placeholder from "../../static/Placeholder.png"
 
 class ProjectItem extends PureComponent {
     state = {
@@ -8,13 +9,13 @@ class ProjectItem extends PureComponent {
     }
 
     componentDidMount() {
-        // if (this.props.project)
-        //     Vibrant.from(this.props.project.icon)
-        //         .getPalette()
-        //         .then(pallete => pallete.LightVibrant._rgb.join(","))
-        //         .then(color =>
-        //             this.setState({ backgroundColor: `rgba(${color},0.5)` })
-        //         )
+        if (this.props.project)
+            Vibrant.from(this.props.project.icon)
+                .getPalette()
+                .then(pallete => pallete.LightVibrant._rgb.join(","))
+                .then(color =>
+                    this.setState({ backgroundColor: `rgba(${color},0.5)` })
+                )
     }
 
     renderProject = () => {
@@ -22,7 +23,7 @@ class ProjectItem extends PureComponent {
             project: {
                 name = "Test Project",
                 headline = "This is a very cool project. Check it out!",
-                icon = "https://dummyimage.com/300x200"
+                icon = Placeholder
             } = {},
             size
         } = this.props
