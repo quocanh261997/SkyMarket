@@ -1,3 +1,9 @@
+.form-control,
+.btn,
+.dropdown-menu {
+    border-radius: 10px;
+}
+
 .navbar-white {
     background-color: white;
     transition: box-shadow 0.1s ease;
@@ -92,7 +98,7 @@
 
 .dropdown-item {
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 0.8em 1.5em;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -109,7 +115,7 @@
 .project-item {
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 8px;
+    border-radius: 10px;
     transition: box-shadow 0.2s ease;
     height: 230px;
     overflow: hidden;
@@ -121,8 +127,6 @@
 }
 
 .project-item__image__background {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,13 +141,12 @@
         border: none;
         cursor: pointer;
         height: auto;
+        padding: 0.5em 0 0.5em 0;
     }
 
     .project-item:hover {
         box-shadow: none;
-        border-radius: 8px;
         background-color: #eeeeee;
-        border-radius: 8px;
     }
 
     .project-item__image__background {
@@ -154,15 +157,15 @@
 }
 
 .project-item__small {
-    padding: 4px 0 4px 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    padding: 0.5em 0 0.5em 0;
 }
 
 .project-item__small:hover {
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #eeeeee;
 }
 
@@ -173,7 +176,7 @@
 }
 
 .project-item__body {
-    padding: 8px 16px;
+    padding: 0.5em 1em;
 }
 
 .project-item__title {
@@ -195,8 +198,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 0.8em 1em 0.8em 1em;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
 }
@@ -222,9 +225,9 @@
 }
 
 .searchbox-option {
-    margin: 0 8px 4px 0;
-    padding: 2px 8px 2px 10px;
-    border-radius: 20px;
+    margin: 0.2em 0.5em 0.3em 0;
+    padding: 0.3em 0.6em 0.3em 0.8em;
+    border-radius: 10px;
     background-color: #469ace;
     color: white;
     display: flex;
@@ -234,7 +237,7 @@
 
 .searchbox-option img {
     width: 25px;
-    margin: 0 4px 0 4px;
+    margin: 0 0.3em 0 0.3em;
 }
 
 .searchbox-option i {

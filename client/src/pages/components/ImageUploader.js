@@ -34,8 +34,8 @@ class ImageUploader extends Component {
         return (
             <div
                 style={{
-                    width: 100,
-                    height: 100,
+                    width: 120,
+                    height: 120,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -50,7 +50,8 @@ class ImageUploader extends Component {
                 <FileUploader
                     style={{
                         position: "absolute",
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         opacity: 0,
                         cursor: "pointer"
                     }}

@@ -189,8 +189,8 @@ export default class index extends Component {
                             {this.state.photos.map(p => (
                                 <img
                                     style={{
-                                        width: 100,
-                                        marginRight: "16px"
+                                        width: 200,
+                                        margin: "0 1em 1em 0"
                                     }}
                                     key={p}
                                     src={p}
