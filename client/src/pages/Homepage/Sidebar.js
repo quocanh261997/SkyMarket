@@ -8,7 +8,7 @@ class Sidebar extends Component {
     }
 
     componentDidMount() {
-        api("get", "categories").then(({ categories }) =>
+        api("get", "/categories").then(({ categories }) =>
             this.setState({ categories })
         )
     }

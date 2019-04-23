@@ -10,7 +10,7 @@ export const removeAuthHeader = () => {
 
 export default (method, path, data) => {
     return new Promise((resolve, reject) => {
-        axios[method](path, data)
+        axios[method](`/api${path}`, data)
             .then(response => resolve(response.data))
             .catch(error => reject(error.response.data))
     })

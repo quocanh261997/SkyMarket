@@ -2,15 +2,14 @@ require("dotenv").config()
 const PORT = process.env.PORT || 8080
 const express = require("express"),
     app = express(),
-    bodyParser = require("body-parser"),
-    jwt = require("jsonwebtoken"),
     cors = require("cors"),
     path = require("path"),
-    db = require("./models")
+    db = require("./models"),
+    jwt = require("jsonwebtoken"),
+    bodyParser = require("body-parser")
 
 app.use(bodyParser.json())
 app.use(cors())
-app.use(express.static(path.join(__dirname, "client/build")))
 
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization
@@ -27,7 +26,7 @@ const authMiddleware = (req, res, next) => {
 }
 
 // Getting the apps for homepage
-app.get("/home", async (req, res) => {
+app.get("/api/home", async (req, res) => {
     try {
         const featured = await db.Project.aggregate([
             { $sample: { size: 6 } },
@@ -49,7 +48,7 @@ app.get("/home", async (req, res) => {
     }
 })
 
-app.get("/categories", async (req, res) => {
+app.get("/api/categories", async (req, res) => {
     try {
         const categories = await db.Category.aggregate([
             { $sample: { size: 10 } }
@@ -62,7 +61,7 @@ app.get("/categories", async (req, res) => {
     }
 })
 
-app.get("/categories/search", async (req, res, next) => {
+app.get("/api/categories/search", async (req, res, next) => {
     try {
         const q = req.query.q
         const categories = await db.Category.find(
@@ -80,7 +79,7 @@ app.get("/categories/search", async (req, res, next) => {
 })
 
 // Getting the list of projects that have the queried category
-app.get("/categories/:id", async (req, res, next) => {
+app.get("/api/categories/:id", async (req, res, next) => {
     try {
         const id = req.params.id
         const { name, photo } = await db.Category.findById(id)
@@ -101,7 +100,7 @@ app.get("/categories/:id", async (req, res, next) => {
 })
 
 // Getting the list of projects based on queried name
-app.get("/projects/search", async (req, res, next) => {
+app.get("/api/projects/search", async (req, res, next) => {
     try {
         const q = req.query.q
         const projects = await db.Project.find(
@@ -118,7 +117,7 @@ app.get("/projects/search", async (req, res, next) => {
     }
 })
 
-app.get("/projects/:id", async (req, res, next) => {
+app.get("/api/projects/:id", async (req, res, next) => {
     try {
         const id = req.params.id
         const project = await db.Project.findById(
@@ -135,7 +134,7 @@ app.get("/projects/:id", async (req, res, next) => {
     }
 })
 
-app.post("/projects", async (req, res, next) => {
+app.post("/api/projects", async (req, res, next) => {
     try {
         const { _id } = await db.Project.create(req.body)
         res.status(201).json({ project: _id })
@@ -144,7 +143,7 @@ app.post("/projects", async (req, res, next) => {
     }
 })
 
-app.get("/users/search", async (req, res, next) => {
+app.get("/api/users/search", async (req, res, next) => {
     try {
         const q = req.query.q
         const users = await db.User.find(
@@ -161,7 +160,7 @@ app.get("/users/search", async (req, res, next) => {
     }
 })
 
-app.post("/signup", async (req, res, next) => {
+app.post("/api/signup", async (req, res, next) => {
     const {
         username,
         email,
@@ -197,7 +196,7 @@ app.post("/signup", async (req, res, next) => {
         })
 })
 
-app.post("/signin", async (req, res, next) => {
+app.post("/api/signin", async (req, res, next) => {
     const { userInput, password } = req.body
     try {
         let user = await db.User.findOne({
@@ -224,14 +223,17 @@ app.post("/signin", async (req, res, next) => {
     }
 })
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "/client/build/index.html"))
-})
-
 app.use(function(err, req, res, next) {
     res.status(err.status || 500).json({
         type: err.type || "INTERNAL_ERROR"
     })
 })
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "client/build")))
+    app.get("*", function(req, res) {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"))
+    })
+}
+
+app.listen(PORT, () => console.log(`Node listening on port ${PORT}`))
