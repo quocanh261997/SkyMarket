@@ -55,14 +55,7 @@ class Project extends Component {
                                 borderRadius: "0.8em",
                                 padding: "1em"
                             }}>
-                            <img
-                                style={{
-                                    height: 100,
-                                    width: 100
-                                }}
-                                src={icon}
-                                alt=""
-                            />
+                            <img style={{ width: 100 }} src={icon} alt="" />
                         </div>
                         <div className="sidebar">
                             {categories.map(cat => (
@@ -87,13 +80,9 @@ class Project extends Component {
                             {description}
                         </p>
                         <div className="row">
-                            {photos.map((url, i) => (
+                            {photos.map((p, i) => (
                                 <div key={i} className="col-lg-6 mb-4">
-                                    <img
-                                        className="img-fluid"
-                                        src="http://dummyimage.com/720x450.jpg"
-                                        alt=""
-                                    />
+                                    <img className="img-fluid" src={p} alt="" />
                                 </div>
                             ))}
                         </div>

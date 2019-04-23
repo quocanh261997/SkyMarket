@@ -141,7 +141,7 @@
         border: none;
         cursor: pointer;
         height: auto;
-        padding: 0.5em 0 0.5em 0;
+        padding: 0.5em;
     }
 
     .project-item:hover {
@@ -161,7 +161,7 @@
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    padding: 0.5em 0 0.5em 0;
+    padding: 0.5em;
 }
 
 .project-item__small:hover {
@@ -171,7 +171,6 @@
 
 .project-item__image {
     width: 60px;
-    height: 60px;
 }
 
 .project-item__body {

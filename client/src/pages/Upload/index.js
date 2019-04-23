@@ -120,6 +120,7 @@ export default class index extends Component {
                             maxLength={20}
                             className="form-control"
                             placeholder="Awesome Project"
+                            autoComplete="off"
                             value={name}
                             onChange={this.handleChange}
                         />
@@ -135,6 +136,7 @@ export default class index extends Component {
                             maxLength={50}
                             className="form-control"
                             placeholder="This project does fantastic things!"
+                            autoComplete="off"
                             value={headline}
                             onChange={this.handleChange}
                         />
@@ -176,6 +178,7 @@ export default class index extends Component {
                             value={description}
                             onChange={this.handleChange}
                             placeholder="Show how awesome your project is!"
+                            autoComplete="off"
                         />
                     </div>
                     <div className="form-group">
