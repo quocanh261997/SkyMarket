@@ -1,13 +1,16 @@
 require("dotenv").config()
 const PORT = process.env.PORT || 8080
-const app = require("express")(),
-    db = require("./models"),
+const express = require("express"),
+    app = express(),
     bodyParser = require("body-parser"),
     jwt = require("jsonwebtoken"),
-    cors = require("cors")
+    cors = require("cors"),
+    path = require("path"),
+    db = require("./models")
 
 app.use(bodyParser.json())
 app.use(cors())
+app.use(express.static(path.join(__dirname, "client/build")))
 
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization
@@ -219,6 +222,10 @@ app.post("/signin", async (req, res, next) => {
             type: "INVALID_EMAIL"
         })
     }
+})
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/client/build/index.html"))
 })
 
 app.use(function(err, req, res, next) {
