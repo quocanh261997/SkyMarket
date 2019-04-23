@@ -48,8 +48,13 @@ class Navbar extends Component {
                     }}>
                     <div className="dropdown">
                         <button
-                            style={{ marginRight: 10 }}
-                            className="btn btn-outline dropdown-toggle"
+                            style={{
+                                marginRight: 10,
+                                background: "transparent",
+                                border: "none",
+                                outline: "none"
+                            }}
+                            className="dropdown-toggle"
                             id="dropdownUser"
                             data-toggle="dropdown"
                             aria-haspopup="true"

@@ -1,23 +1,42 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
+import * as Vibrant from "node-vibrant"
 
 class Project extends Component {
     state = {
         name: "",
-        headline: "",
         icon: "",
         photos: [],
-        categories: []
+        headline: "",
+        description: "",
+        categories: [],
+        backgroundColor: ""
     }
 
     componentDidMount() {
         let id = this.props.match.params.id
-        api("get", `/projects/${id}`).then(({ project }) =>
-            this.setState(project)
-        )
+        api("get", `/projects/${id}`)
+            .then(({ project }) => this.setState(project))
+            .then(() =>
+                Vibrant.from(this.state.icon)
+                    .getPalette()
+                    .then(pallete => pallete.LightVibrant._rgb.join(","))
+                    .then(color =>
+                        this.setState({ backgroundColor: `rgba(${color},0.5)` })
+                    )
+            )
     }
 
     render() {
+        const {
+            name,
+            icon,
+            photos,
+            headline,
+            description,
+            categories,
+            backgroundColor
+        } = this.state
         return (
             <div className="container m-auto">
                 <button
@@ -26,40 +45,50 @@ class Project extends Component {
                     Back
                 </button>
                 <div className="row">
-                    <div className="col-md-4">
-                        <img
+                    <div className="col-lg-3 col-md-4 text-center">
+                        <div
                             style={{
-                                height: 100,
-                                width: 100,
-                                borderRadius: 50
-                            }}
-                            src={this.state.icon}
-                            alt="Icon"
-                        />
-                        <ul id="sidebar" className="list-group collapse">
-                            {this.state.categories.map(cat => (
-                                <li
+                                width: 150,
+                                height: 150,
+                                margin: "1em auto",
+                                backgroundColor,
+                                borderRadius: "0.8em",
+                                padding: "1em"
+                            }}>
+                            <img
+                                style={{
+                                    height: 100,
+                                    width: 100,
+                                    borderRadius: 50
+                                }}
+                                src={icon}
+                                alt="Project"
+                            />
+                        </div>
+                        <div className="sidebar">
+                            {categories.map(cat => (
+                                <div
+                                    className="sidebar-item"
                                     key={cat._id}
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "space-between"
-                                    }}
-                                    className="list-group-item sidebar-item"
-                                    onClick={() => {}}>
-                                    {cat.name}
-                                </li>
+                                    onClick={() =>
+                                        this.props.history.push(
+                                            `/categories/${cat._id}`
+                                        )
+                                    }>
+                                    <span>{cat.name}</span>
+                                    <img src={cat.photo} alt="Icon" />
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
-                    <div className="col-md-8">
-                        <h2>{this.state.name}</h2>
-                        <p>{this.state.headline}</p>
+                    <div className="col-lg-9 col-md-8">
+                        <h2>{name}</h2>
+                        <p style={{ fontSize: "large" }}>{headline}</p>
                         <p style={{ marginTop: "2em", textAlign: "justify" }}>
-                            {this.state.description}
+                            {description}
                         </p>
                         <div className="row">
-                            {this.state.photos.map((url, index) => (
+                            {photos.map((url, index) => (
                                 <div className="col-lg-6 mb-4">
                                     <img
                                         className="img-fluid"

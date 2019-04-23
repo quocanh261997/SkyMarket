@@ -123,8 +123,8 @@ app.get("/projects/:id", async (req, res, next) => {
             id,
             "name icon headline description photos views stars"
         )
-            .populate("categories", "name")
-            .populate("developers", "username")
+            .populate("categories", "name photo")
+            .populate("developers", "username photo")
         res.status(200).json({
             project
         })

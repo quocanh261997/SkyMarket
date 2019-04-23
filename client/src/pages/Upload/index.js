@@ -103,7 +103,7 @@ export default class index extends Component {
             selectedCats
         } = this.state
         return (
-            <div className="container">
+            <div className="container my-4">
                 <form onSubmit={this.handleSubmit}>
                     <ImageUploader
                         style={{ margin: "auto" }}
