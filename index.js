@@ -1,6 +1,5 @@
 require("dotenv").config()
-const PORT = 8080 || process.env.PORT
-
+const PORT = process.env.PORT || 8080
 const app = require("express")(),
     db = require("./models"),
     bodyParser = require("body-parser"),
@@ -228,9 +227,4 @@ app.use(function(err, req, res, next) {
     })
 })
 
-app.listen(PORT, err => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${PORT}`)
-})
-
-module.exports = app
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
