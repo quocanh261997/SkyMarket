@@ -1,5 +1,5 @@
-import React, { Component } from "react"
 import firebase from "firebase"
+import React, { Component } from "react"
 import FileUploader from "react-firebase-file-uploader"
 import Upload from "../../static/Upload.png"
 

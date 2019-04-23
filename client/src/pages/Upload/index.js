@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
+import IconUpload from "../../static/IconUpload.png"
+import PhotoUpload from "../../static/PhotoUpload.png"
 import ImageUploader from "../components/ImageUploader"
 import SearchBox from "../components/SearchBox"
 
@@ -105,7 +107,9 @@ export default class index extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <ImageUploader
                         style={{ margin: "auto" }}
-                        backgroundImage={this.state.icon}
+                        backgroundImage={
+                            this.state.icon ? this.state.icon : IconUpload
+                        }
                         onUploadSuccess={this.handleIconUpload}
                     />
                     <div className="form-group">
@@ -194,6 +198,7 @@ export default class index extends Component {
                                 />
                             ))}
                             <ImageUploader
+                                backgroundImage={PhotoUpload}
                                 onUploadSuccess={this.handlePhotoUpload}
                             />
                         </div>

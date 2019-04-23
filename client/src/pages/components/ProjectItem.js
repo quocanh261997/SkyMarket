@@ -21,7 +21,7 @@ class ProjectItem extends PureComponent {
     renderProject = () => {
         const {
             project: {
-                name = "Test Project",
+                name = "Awesome Project",
                 headline = "This is a very cool project. Check it out!",
                 icon = Placeholder
             } = {},
