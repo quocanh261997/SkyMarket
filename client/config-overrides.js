@@ -3,10 +3,7 @@ module.exports = (config, env) => {
 
     config.module.rules.push({
         test: /\.worker.js$/,
-        loader: "worker-loader",
-        options: {
-            /* ... */
-        }
+        loader: "worker-loader"
     })
 
     return config
