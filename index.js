@@ -82,19 +82,23 @@ app.get("/api/categories/search", async (req, res, next) => {
 app.get("/api/categories/:id", async (req, res, next) => {
     try {
         const id = req.params.id
+        const offset = req.query.offset || 0
         const { name, photo } = await db.Category.findById(id)
         const projects = await db.Project.find(
             {
                 categories: id
             },
             "name icon headline"
-        ).limit(15)
+        )
+            .skip(Number(offset))
+            .limit(12)
         res.status(200).json({
             name,
             photo,
             projects
         })
     } catch (err) {
+        console.log(err)
         next(err)
     }
 })
