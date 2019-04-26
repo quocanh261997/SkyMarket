@@ -5,9 +5,11 @@
     "main": "index.js",
     "scripts": {
         "test": "mocha test",
-        "start": "node index.js",
+        "start": "nodemon index.js",
         "postinstall": "cd client && npm install",
-        "heroku-postbuild": "cd client && npm run build"
+        "heroku-postbuild": "cd client && npm run build",
+        "sass-compile": "sass --watch --style compressed --no-source-map client/src/pages/App/index.scss:client/src/pages/App/index.css",
+        "dev": "concurrently -k -n server,client -c bgRed,bgBlue \"npm run sass-compile\" \"npm start\" \"cd client && npm start\""
     },
     "author": "",
     "license": "ISC",
@@ -22,6 +24,7 @@
         "express": "^4.16.4",
         "jsonwebtoken": "^8.5.1",
         "mocha": "^6.1.4",
-        "mongoose": "^5.4.20"
+        "mongoose": "^5.4.20",
+        "sass": "^1.19.0"
     }
 }

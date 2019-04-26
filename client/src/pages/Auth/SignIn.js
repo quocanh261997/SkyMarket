@@ -30,7 +30,7 @@ class SignIn extends Component {
         return (
             <div className="container">
                 <form className="auth-form" onSubmit={this.onSignIn}>
-                    <h2 style={{ marginBottom: "1em" }}>Sign In</h2>
+                    <h2>Sign In</h2>
                     <div className="form-group">
                         <input
                             type="text"
@@ -69,10 +69,7 @@ class SignIn extends Component {
                             Incorrect password
                         </div>
                     </div>
-                    <button
-                        type="submit"
-                        className="btn btn-fill btn-block"
-                        style={{ marginBottom: "2em" }}>
+                    <button type="submit" className="btn btn-fill btn-block">
                         Submit
                     </button>
                     <Link to="/signup">Don't have an account?</Link>

@@ -31,48 +31,25 @@ class Navbar extends Component {
     renderUsername = () => {
         if (!this.props.username) {
             return (
-                <Link
-                    to="/signin"
-                    className="btn btn-outline"
-                    style={{ border: "none", marginRight: 10 }}>
+                <Link to="/signin" className="btn btn-outline">
                     Sign In
                 </Link>
             )
         } else {
             return (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center"
-                    }}>
-                    <div className="dropdown">
-                        <button
-                            style={{
-                                marginRight: 10,
-                                background: "transparent",
-                                border: "none",
-                                outline: "none"
-                            }}
-                            className="dropdown-toggle"
-                            id="dropdownUser"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                            Hello {this.props.username}!
-                        </button>
-                        <div
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownUser">
-                            <Link to="/upload" className="dropdown-item">
-                                Upload
-                            </Link>
-                            <span
-                                className="dropdown-item"
-                                onClick={this.props.signOut}>
-                                Sign Out
-                            </span>
-                        </div>
+                <div className="dropdown">
+                    <button className="dropdown-toggle" data-toggle="dropdown">
+                        Hello {this.props.username}!
+                    </button>
+                    <div className="dropdown-menu">
+                        <Link to="/upload" className="dropdown-item">
+                            Upload
+                        </Link>
+                        <span
+                            className="dropdown-item"
+                            onClick={this.props.signOut}>
+                            Sign Out
+                        </span>
                     </div>
                 </div>
             )
@@ -88,18 +65,10 @@ class Navbar extends Component {
                 }>
                 <div className="container">
                     <span className="navbar-brand">
-                        <img style={{ width: 60 }} src={Logo} alt="" />
+                        <img src={Logo} alt="" />
                     </span>
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                        <Link
-                            to="/"
-                            className="btn btn-outline"
-                            style={{ border: "none", marginRight: 10 }}>
+                    <div className="navbar-right">
+                        <Link to="/" className="btn btn-outline">
                             Browse
                         </Link>
                         {this.renderUsername()}

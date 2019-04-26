@@ -28,43 +28,27 @@ class Homepage extends Component {
 
     render() {
         return (
-            <div>
+            <section>
                 <div className="homepage-header">
                     <div className="homepage-header__background">
                         <div className="container row">
                             <div className="col-md-6 homepage-header__search">
-                                <h2 style={{ color: "white" }}>
-                                    Showcase your projects with SkyMarket
-                                </h2>
+                                <h2>Showcase your projects with SkyMarket</h2>
                                 <SearchBox
                                     loadOptions={this.getProjects}
                                     optionKey={o => o._id}
                                     optionLabel={o => o.name}
                                     optionImg={o => o.icon}
                                     placeholder="Search Projects"
-                                    onSelect={({
-                                        _id,
-                                        name,
-                                        headline,
-                                        icon
-                                    }) => {
+                                    onSelect={({ _id }) => {
                                         this.props.history.push(
-                                            `/projects/${_id}`,
-                                            {
-                                                name,
-                                                headline,
-                                                icon
-                                            }
+                                            `/projects/${_id}`
                                         )
                                     }}
                                 />
                             </div>
-                            <div className="col-md-6 text-center">
-                                <img
-                                    className="homepage-header__image"
-                                    src={Landing}
-                                    alt=""
-                                />
+                            <div className="col-md-6 homepage-header__image">
+                                <img src={Landing} alt="" />
                             </div>
                         </div>
                     </div>
@@ -105,7 +89,7 @@ class Homepage extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }

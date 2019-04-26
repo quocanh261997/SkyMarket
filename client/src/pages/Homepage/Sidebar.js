@@ -13,11 +13,8 @@ class Sidebar extends Component {
         )
     }
 
-    handleClick = ({ _id, name, photo }) => {
-        this.props.history.push(`/categories/${_id}`, {
-            name,
-            photo
-        })
+    handleClick = ({ _id }) => {
+        this.props.history.push(`/categories/${_id}`)
     }
 
     render() {

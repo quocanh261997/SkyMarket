@@ -32,7 +32,7 @@ class SignUp extends Component {
         return (
             <div className="container">
                 <form className="auth-form" onSubmit={this.onSignUp}>
-                    <h2 style={{ marginBottom: "1em" }}>Sign Up</h2>
+                    <h2>Sign Up</h2>
                     <div className="form-group">
                         <input
                             type="text"
@@ -82,10 +82,7 @@ class SignUp extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="btn btn-primary btn-block"
-                        style={{ marginBottom: "2em" }}>
+                    <button type="submit" className="btn btn-fill btn-block">
                         Submit
                     </button>
                     <Link to="/signin">Already have an account?</Link>
