@@ -22,9 +22,8 @@ class Category extends Component {
                 <div
                     style={{
                         display: "flex",
-                        flexDirection: "row",
                         alignItems: "center",
-                        margin: "1em 0 1em 0"
+                        marginBottom: "1em"
                     }}>
                     <button
                         className="btn btn-outline"
@@ -34,8 +33,8 @@ class Category extends Component {
                     <div
                         style={{
                             display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center"
+                            alignItems: "center",
+                            marginLeft: "1em"
                         }}>
                         <h3 style={{ margin: 0 }}>{this.state.name}</h3>
                         <img
@@ -45,7 +44,7 @@ class Category extends Component {
                         />
                     </div>
                 </div>
-                <div className="row mx-auto">
+                <div className="row m-auto">
                     {this.state.projects.map((p, i) => (
                         <ProjectItem
                             key={p ? p._id : i}
@@ -53,6 +52,14 @@ class Category extends Component {
                             size="large"
                         />
                     ))}
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "1em"
+                    }}>
+                    <button className="btn btn-fill">Load More</button>
                 </div>
             </div>
         )
