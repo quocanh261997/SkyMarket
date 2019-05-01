@@ -34,7 +34,7 @@ export default class index extends Component {
 
     handleDevUnselect = o => {
         this.setState(prev => ({
-            selectedDevs: prev.selectedDevs.filter(({ id }) => id !== o.id)
+            selectedDevs: prev.selectedDevs.filter(({ _id }) => _id !== o._id)
         }))
     }
 
@@ -46,7 +46,7 @@ export default class index extends Component {
 
     handleCatUnselect = o => {
         this.setState(prev => ({
-            selectedCats: prev.selectedCats.filter(({ id }) => id !== o.id)
+            selectedCats: prev.selectedCats.filter(({ _id }) => _id !== o._id)
         }))
     }
 
@@ -76,8 +76,8 @@ export default class index extends Component {
         ) {
             api("post", "/projects", {
                 ...this.state,
-                developers: selectedDevs.map(d => d.id),
-                categories: selectedCats.map(c => c.id)
+                developers: selectedDevs.map(d => d._id),
+                categories: selectedCats.map(c => c._id)
             }).then(({ project }) =>
                 this.props.history.push(`/projects/${project}`)
             )
@@ -147,7 +147,7 @@ export default class index extends Component {
                             isMulti
                             selectedOptions={selectedDevs}
                             loadOptions={this.getDevelopers}
-                            optionKey={o => o.id}
+                            optionKey={o => o._id}
                             optionLabel={o => o.username}
                             optionImg={o => o.photo}
                             placeholder="Search"
@@ -161,7 +161,7 @@ export default class index extends Component {
                             isMulti
                             selectedOptions={selectedCats}
                             loadOptions={this.getCategories}
-                            optionKey={o => o.id}
+                            optionKey={o => o._id}
                             optionLabel={o => o.name}
                             optionImg={o => o.photo}
                             placeholder="Search"

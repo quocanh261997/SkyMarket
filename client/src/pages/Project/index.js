@@ -61,10 +61,10 @@ class Project extends Component {
                             {categories.map(cat => (
                                 <div
                                     className="sidebar-item"
-                                    key={cat.id}
+                                    key={cat._id}
                                     onClick={() =>
                                         this.props.history.push(
-                                            `/categories/${cat.id}`
+                                            `/categories/${cat._id}`
                                         )
                                     }>
                                     <span>{cat.name}</span>

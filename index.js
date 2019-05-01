@@ -11,8 +11,8 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use("/api/users", routes.userRoute)
-app.use("/api/categories", routes.categoryRoute)
 app.use("/api/projects", routes.projectRoute)
+app.use("/api/categories", routes.categoryRoute)
 
 app.use(function(err, _, res, _) {
     res.status(err.status || 500).json({

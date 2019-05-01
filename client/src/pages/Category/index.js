@@ -67,7 +67,7 @@ class Category extends Component {
                 <div className="row m-auto">
                     {this.state.projects.map((p, i) => (
                         <ProjectItem
-                            key={p ? p.id : i}
+                            key={p ? p._id : i}
                             project={p}
                             size="large"
                         />

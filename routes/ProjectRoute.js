@@ -1,6 +1,30 @@
 const db = require("../models"),
     router = require("express").Router()
 
+const authorize = (req, _, next) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1]
+        const payload = jwt.verify(token, process.env.SECRET_KEY)
+        const { _id: userId } = payload
+        req.userId = userId
+        next()
+    } catch (error) {
+        next({
+            status: 401,
+            type: "UNAUTHORIZED"
+        })
+    }
+}
+
+router.post("/", authorize, async (req, res, next) => {
+    try {
+        const { _id } = await db.Project.create(req.body)
+        res.status(201).json({ project: _id })
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.get("/", async (req, res, next) => {
     try {
         if (Object.keys(req.query).length > 0) {
@@ -59,6 +83,23 @@ router.get("/", async (req, res, next) => {
     }
 })
 
+router.get("/search", async (req, res, next) => {
+    try {
+        const q = req.query.q
+        const projects = await db.Project.find(
+            {
+                name: { $regex: q, $options: "i" }
+            },
+            "name icon"
+        ).limit(5)
+        res.status(200).json({
+            projects
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.get("/:id", async (req, res, next) => {
     try {
         const id = req.params.id
@@ -91,66 +132,19 @@ router.get("/:id/reviews", async (req, res, next) => {
     }
 })
 
-router.post("/:id/reviews", async (req, res, next) => {
+router.post("/:id/reviews", authorize, async (req, res, next) => {
     try {
-        const id = req.params.id
-        const reviews = await db.Review.find(
-            { project: id },
+        const { content } = req.body
+        const review = await db.Review.create(
+            { author: req.userId, project: req.params.id, content },
             "author content likes"
         ).populate("author", "name photo")
-        res.status(200).json({
-            reviews
+        res.status(201).json({
+            review
         })
     } catch (err) {
         next(err)
     }
 })
-
-router.get("/search", async (req, res, next) => {
-    try {
-        const q = req.query.q
-        const projects = await db.Project.find(
-            {
-                name: { $regex: q, $options: "i" }
-            },
-            "name icon"
-        ).limit(5)
-        res.status(200).json({
-            projects
-        })
-    } catch (err) {
-        next(err)
-    }
-})
-
-router.post("/", async (req, res, next) => {
-    try {
-        const { id } = await db.Project.create(req.body)
-        res.status(201).json({ project: id })
-    } catch (err) {
-        next(err)
-    }
-})
-
-const authorize = (req, _, next) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1]
-        const payload = jwt.verify(token, process.env.SECRET_KEY)
-        const { userId } = payload
-        if (req.params.userId && req.params.userId !== userId)
-            next({
-                status: 401,
-                type: "UNAUTHORIZED"
-            })
-        req.userId = userId
-        next()
-    } catch (error) {
-        next({
-            status: 401,
-            type: "UNAUTHORIZED",
-            message: error.message
-        })
-    }
-}
 
 module.exports = router

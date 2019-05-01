@@ -59,4 +59,12 @@ const ProjectSchema = new mongoose.Schema(
     }
 )
 
+ProjectSchema.virtual("id").get(function() {
+    return this._id.toHexString()
+})
+
+ProjectSchema.set("toJSON", {
+    virtuals: true
+})
+
 module.exports = mongoose.model("Project", ProjectSchema)
