@@ -1,5 +1,5 @@
 import api, { removeAuthHeader, setAuthHeader } from "../api"
-import { SIGN_IN, SIGN_OUT } from "./types"
+import { SIGN_IN, SIGN_OUT, STAR_PROJECT, STAR_PROJECTS } from "./types"
 
 export const signUp = (username, email, password) => {
     return dispatch => {
@@ -36,6 +36,7 @@ export const signIn = (userInput, password) => {
                     payload
                 })
             })
+            .then(getStarProjects)
             .catch(error => {
                 throw new Error(error.type)
             })
@@ -49,5 +50,41 @@ export const signOut = () => {
         dispatch({
             type: SIGN_OUT
         })
+    }
+}
+
+export const getStarProjects = () => {
+    return (dispatch, getState) => {
+        const {
+            authReducer: { _id }
+        } = getState()
+        api("get", `/users/${_id}/starProjects`)
+            .then(({ starProjects }) => {
+                dispatch({
+                    type: STAR_PROJECTS,
+                    starProjects
+                })
+            })
+            .catch(error => {
+                throw new Error(error.type)
+            })
+    }
+}
+
+export const starProject = (id, star) => {
+    return dispatch => {
+        api("put", `/projects/${id}/star`, {
+            star
+        })
+            .then(() => {
+                dispatch({
+                    type: STAR_PROJECT,
+                    project: id,
+                    star
+                })
+            })
+            .catch(error => {
+                throw new Error(error.type)
+            })
     }
 }

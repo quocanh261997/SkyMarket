@@ -4,6 +4,7 @@ import { Provider } from "react-redux"
 import { BrowserRouter, Route } from "react-router-dom"
 import { setAuthHeader } from "../../libs/api"
 import store from "../../libs/redux"
+import { getStarProjects } from "../../libs/redux/actions"
 import SignIn from "../Auth/SignIn"
 import SignUp from "../Auth/SignUp"
 import Category from "../Category"
@@ -24,6 +25,7 @@ class App extends Component {
                     type: "SIGN_IN",
                     payload
                 })
+                store.dispatch(getStarProjects())
             } catch (error) {}
         }
     }

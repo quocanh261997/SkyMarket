@@ -123,6 +123,28 @@ router.get("/:id", async (req, res, next) => {
     }
 })
 
+router.put("/:id/star", authorize, async (req, res, next) => {
+    try {
+        const { star } = req.body
+        const id = req.params.id
+        await db.Project.findByIdAndUpdate(id, {
+            $inc: { stars: star ? 1 : -1 }
+        })
+        if (star) {
+            await db.User.findByIdAndUpdate(req.userId, {
+                $push: { starProjects: id }
+            })
+        } else {
+            await db.User.findByIdAndUpdate(req.userId, {
+                $pull: { starProjects: id }
+            })
+        }
+        res.status(204).json({})
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.get("/:id/reviews", async (req, res, next) => {
     try {
         const id = req.params.id

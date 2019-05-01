@@ -73,9 +73,7 @@ class User extends Component {
                         </div>
                     </div>
                     <div className=" col-lg-9">
-                        <h2 style={{ marginBottom: "1em" }}>
-                            {username}'s projects
-                        </h2>
+                        <h2>{username}'s projects</h2>
                         <div className="row">
                             {projects.map((p, i) => (
                                 <ProjectItem

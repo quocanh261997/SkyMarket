@@ -19,6 +19,21 @@ router.get("/search", async (req, res, next) => {
     }
 })
 
+router.get("/:id/starProjects", async (req, res, next) => {
+    try {
+        const id = req.params.id
+        const { starProjects } = await db.User.findById(
+            id,
+            "starProjects"
+        ).limit(5)
+        res.status(200).json({
+            starProjects
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
 router.post("/signup", async (req, res, next) => {
     const {
         username,
@@ -63,12 +78,12 @@ router.post("/signin", async (req, res, next) => {
         })
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
-            const { _id, username, photo } = user
+            const { _id, username, photo, starProjects } = user
             let token = jwt.sign(
                 { _id, username, photo },
                 process.env.SECRET_KEY
             )
-            res.status(200).json({ _id, username, photo, token })
+            res.status(200).json({ _id, username, photo, token, starProjects })
         } else
             next({
                 status: 400,

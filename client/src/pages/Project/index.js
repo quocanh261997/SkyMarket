@@ -2,6 +2,7 @@ import * as Vibrant from "node-vibrant"
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import api from "../../libs/api"
+import { starProject } from "../../libs/redux/actions"
 
 class Project extends Component {
     state = {
@@ -123,7 +124,32 @@ class Project extends Component {
                         </div>
                     </div>
                     <div className="col-lg-9 col-md-8">
-                        <h2>{name}</h2>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between"
+                            }}>
+                            <h2>{name}</h2>
+                            <button
+                                className="btn btn-outline-secondary"
+                                onClick={() =>
+                                    this.props.starProject(
+                                        this.state.id,
+                                        !this.props.star
+                                    )
+                                }>
+                                {this.props.star ? "Unstar " : "Star "}
+                                {this.props.star ? (
+                                    <i
+                                        style={{ color: "orange" }}
+                                        className="fas fa-star"
+                                    />
+                                ) : (
+                                    <i className="far fa-star" />
+                                )}
+                            </button>
+                        </div>
                         <p style={{ fontSize: "large" }}>{headline}</p>
                         <p style={{ marginTop: "2em", textAlign: "justify" }}>
                             {description}
@@ -136,36 +162,41 @@ class Project extends Component {
                             ))}
                         </div>
                         <div>
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    marginBottom: "1em"
-                                }}>
-                                <img
-                                    style={{ height: 40, marginRight: "1em" }}
-                                    src={this.props.photo}
-                                    alt=""
-                                />
-                                <form
-                                    style={{ flex: 1 }}
-                                    onSubmit={this.postReview}>
-                                    <input
-                                        type="text"
-                                        autoComplete="off"
-                                        className="form-control"
-                                        placeholder="Write review"
-                                        disabled={posting}
-                                        value={review}
-                                        onChange={e =>
-                                            this.setState({
-                                                review: e.target.value
-                                            })
-                                        }
-                                        required
+                            {this.props.photo && (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginBottom: "1em"
+                                    }}>
+                                    <img
+                                        style={{
+                                            height: 40,
+                                            marginRight: "1em"
+                                        }}
+                                        src={this.props.photo}
+                                        alt=""
                                     />
-                                </form>
-                            </div>
+                                    <form
+                                        style={{ flex: 1 }}
+                                        onSubmit={this.postReview}>
+                                        <input
+                                            type="text"
+                                            autoComplete="off"
+                                            className="form-control"
+                                            placeholder="Write review"
+                                            disabled={posting}
+                                            value={review}
+                                            onChange={e =>
+                                                this.setState({
+                                                    review: e.target.value
+                                                })
+                                            }
+                                            required
+                                        />
+                                    </form>
+                                </div>
+                            )}
                             {reviews.map(r => (
                                 <div
                                     key={r._id}
@@ -199,4 +230,10 @@ class Project extends Component {
     }
 }
 
-export default connect(({ authReducer: { photo } }) => ({ photo }))(Project)
+export default connect(
+    ({ authReducer: { photo, starProjects } }, props) => ({
+        photo,
+        star: starProjects.includes(props.match.params.id)
+    }),
+    { starProject }
+)(Project)
