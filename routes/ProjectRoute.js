@@ -1,4 +1,5 @@
 const db = require("../models"),
+    jwt = require("jsonwebtoken"),
     router = require("express").Router()
 
 const authorize = (req, _, next) => {
@@ -8,7 +9,7 @@ const authorize = (req, _, next) => {
         const { _id: userId } = payload
         req.userId = userId
         next()
-    } catch (error) {
+    } catch (err) {
         next({
             status: 401,
             type: "UNAUTHORIZED"
@@ -29,11 +30,14 @@ router.get("/", async (req, res, next) => {
     try {
         if (Object.keys(req.query).length > 0) {
             if (req.query.category) {
-                const { category, offset = 0 } = req.query
-                const { name, photo } = await db.Category.findById(category)
+                const { category: id, offset = 0 } = req.query
+                const { name, photo } = await db.Category.findById(
+                    id,
+                    "name photo"
+                )
                 const projects = await db.Project.find(
                     {
-                        categories: category
+                        categories: id
                     },
                     "name icon headline"
                 )
@@ -45,18 +49,20 @@ router.get("/", async (req, res, next) => {
                     projects
                 })
             } else if (req.query.user) {
-                const { user, offset = 0 } = req.query
-                const { name, photo } = await db.User.findById(user)
+                const { user: id } = req.query
+                const { username, email, photo } = await db.User.findById(
+                    id,
+                    "username photo email"
+                )
                 const projects = await db.Project.find(
                     {
-                        developers: user
+                        developers: id
                     },
                     "name icon headline"
                 )
-                    .skip(Number(offset))
-                    .limit(12)
                 res.status(200).json({
-                    name,
+                    username,
+                    email,
                     photo,
                     projects
                 })
@@ -123,7 +129,9 @@ router.get("/:id/reviews", async (req, res, next) => {
         const reviews = await db.Review.find(
             { project: id },
             "author content likes"
-        ).populate("author", "name photo")
+        )
+            .sort("-createdAt")
+            .populate("author", "username photo")
         res.status(200).json({
             reviews
         })
@@ -135,10 +143,15 @@ router.get("/:id/reviews", async (req, res, next) => {
 router.post("/:id/reviews", authorize, async (req, res, next) => {
     try {
         const { content } = req.body
-        const review = await db.Review.create(
-            { author: req.userId, project: req.params.id, content },
-            "author content likes"
-        ).populate("author", "name photo")
+        let review = await db.Review.create({
+            author: req.userId,
+            project: req.params.id,
+            content
+        })
+        review = await db.Review.populate(review, {
+            path: "author",
+            select: "username photo"
+        })
         res.status(201).json({
             review
         })

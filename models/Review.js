@@ -1,22 +1,27 @@
 const monoogse = require("mongoose")
 
-const ReviewSchema = new monoogse.Schema({
-    author: {
-        type: monoogse.Schema.Types.ObjectId,
-        ref: "User"
+const ReviewSchema = new monoogse.Schema(
+    {
+        author: {
+            type: monoogse.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        project: {
+            type: monoogse.Schema.Types.ObjectId,
+            ref: "Project"
+        },
+        content: {
+            type: String,
+            required: true
+        },
+        likes: {
+            type: Number,
+            default: 0
+        }
     },
-    project: {
-        type: monoogse.Schema.Types.ObjectId,
-        ref: "Project"
-    },
-    content: {
-        type: String,
-        required: true
-    },
-    likes: {
-        type: Number,
-        default: 0
+    {
+        timestamps: true
     }
-})
+)
 
 module.exports = monoogse.model("Review", ReviewSchema)

@@ -1,45 +1,5 @@
 import api, { removeAuthHeader, setAuthHeader } from "../api"
-import {
-    FETCH_PROJECTS,
-    FETCH_PROJECT_CATEGORY,
-    FETCH_PROJECT_NAME,
-    SIGN_IN,
-    SIGN_OUT
-} from "./types"
-
-export const fetchProjects = () => {
-    return async dispatch => {
-        const response = await api("get", "/")
-        dispatch({
-            type: FETCH_PROJECTS,
-            payload: response
-        })
-    }
-}
-
-export const fetchProjectCategory = category => {
-    return async dispatch => {
-        const response = await api("get", `/category/${category}`)
-        dispatch({
-            type: FETCH_PROJECT_CATEGORY,
-            payload: response
-        })
-    }
-}
-
-export const fetchProjectName = name => {
-    return async dispatch => {
-        const response = await api("get", "/search", {
-            params: {
-                q: name
-            }
-        })
-        dispatch({
-            type: FETCH_PROJECT_NAME,
-            payload: response
-        })
-    }
-}
+import { SIGN_IN, SIGN_OUT } from "./types"
 
 export const signUp = (username, email, password) => {
     return dispatch => {

@@ -10,6 +10,7 @@ import Category from "../Category"
 import Homepage from "../Homepage"
 import Project from "../Project"
 import Upload from "../Upload"
+import User from "../User"
 import "./index.css"
 import Navbar from "./Navbar"
 
@@ -36,6 +37,7 @@ class App extends Component {
                     <Route path="/signin" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/upload" component={Upload} />
+                    <Route path="/users/:id" component={User} />
                     <Route path="/projects/:id" component={Project} />
                     <Route path="/categories/:id" component={Category} />
                 </BrowserRouter>

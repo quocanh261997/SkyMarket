@@ -252,42 +252,42 @@
 // ================================================== Searchbox
 .searchbox {
     height: auto;
+}
 
-    .searchbox-options {
-        padding: 0;
-        margin-bottom: 0.5em;
-        display: flex;
-        flex-flow: row wrap;
+.searchbox-options {
+    padding: 0;
+    margin-bottom: 0.5em;
+    display: flex;
+    flex-flow: row wrap;
+}
 
-        .searchbox-option {
-            cursor: pointer;
-            color: white;
-            background-color: #62b0e0;
-            margin: 0.2em 0.5em 0.3em 0;
-            padding: 0.3em 0.6em 0.3em 0.8em;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
+.searchbox-input {
+    width: 100%;
+    outline: none;
+    border: none;
+}
 
-            img {
-                width: 25px;
-                margin: 0 0.3em;
-            }
+.searchbox-option {
+    cursor: pointer;
+    color: white;
+    background-color: #62b0e0;
+    margin: 0.2em 0.5em 0.3em 0;
+    padding: 0.3em 0.6em 0.3em 0.8em;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-            i {
-                width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
+    img {
+        width: 25px;
+        margin: 0 0.3em;
     }
 
-    .searchbox-input {
-        width: 100%;
-        outline: none;
-        border: none;
+    i {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

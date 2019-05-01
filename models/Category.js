@@ -11,12 +11,4 @@ const CategorySchema = new monoogse.Schema({
     }
 })
 
-CategorySchema.virtual("id").get(function() {
-    return this._id.toHexString()
-})
-
-CategorySchema.set("toJSON", {
-    virtuals: true
-})
-
 module.exports = monoogse.model("Category", CategorySchema)

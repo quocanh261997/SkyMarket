@@ -1,22 +1,30 @@
 import * as Vibrant from "node-vibrant"
 import React, { Component } from "react"
+import { connect } from "react-redux"
 import api from "../../libs/api"
 
 class Project extends Component {
     state = {
+        id: "",
         name: "",
         icon: "",
         photos: [],
         headline: "",
         description: "",
         categories: [],
-        backgroundColor: ""
+        developers: [],
+        reviews: [],
+        backgroundColor: "",
+        review: "",
+        posting: false
     }
 
     componentDidMount() {
         let id = this.props.match.params.id
+        this.setState({ id })
         api("get", `/projects/${id}`)
             .then(({ project }) => this.setState(project))
+            .then(this.getReviews)
             .then(() =>
                 Vibrant.from(this.state.icon)
                     .getPalette()
@@ -27,6 +35,26 @@ class Project extends Component {
             )
     }
 
+    getReviews = () => {
+        api("get", `/projects/${this.state.id}/reviews`).then(({ reviews }) =>
+            this.setState({ reviews })
+        )
+    }
+
+    postReview = e => {
+        e.preventDefault()
+        this.setState({ posting: true })
+        api("post", `/projects/${this.state.id}/reviews`, {
+            content: this.state.review
+        }).then(({ review }) =>
+            this.setState(prev => ({
+                reviews: [review, ...prev.reviews],
+                review: "",
+                posting: false
+            }))
+        )
+    }
+
     render() {
         const {
             name,
@@ -35,7 +63,11 @@ class Project extends Component {
             headline,
             description,
             categories,
-            backgroundColor
+            developers,
+            reviews,
+            backgroundColor,
+            review,
+            posting
         } = this.state
         return (
             <div className="container m-auto">
@@ -57,18 +89,35 @@ class Project extends Component {
                             }}>
                             <img style={{ width: 100 }} src={icon} alt="" />
                         </div>
-                        <div className="sidebar">
-                            {categories.map(cat => (
+                        <div
+                            style={{ justifyContent: "center" }}
+                            className="searchbox-options">
+                            {developers.map(d => (
                                 <div
-                                    className="sidebar-item"
-                                    key={cat._id}
+                                    className="searchbox-option"
+                                    key={d._id}
                                     onClick={() =>
                                         this.props.history.push(
-                                            `/categories/${cat._id}`
+                                            `/users/${d._id}`
                                         )
                                     }>
-                                    <span>{cat.name}</span>
-                                    <img src={cat.photo} alt="" />
+                                    <span>{d.username}</span>
+                                    <img src={d.photo} alt="" />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="sidebar">
+                            {categories.map(c => (
+                                <div
+                                    className="sidebar-item"
+                                    key={c._id}
+                                    onClick={() =>
+                                        this.props.history.push(
+                                            `/categories/${c._id}`
+                                        )
+                                    }>
+                                    <span>{c.name}</span>
+                                    <img src={c.photo} alt="" />
                                 </div>
                             ))}
                         </div>
@@ -86,6 +135,63 @@ class Project extends Component {
                                 </div>
                             ))}
                         </div>
+                        <div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    marginBottom: "1em"
+                                }}>
+                                <img
+                                    style={{ height: 40, marginRight: "1em" }}
+                                    src={this.props.photo}
+                                    alt=""
+                                />
+                                <form
+                                    style={{ flex: 1 }}
+                                    onSubmit={this.postReview}>
+                                    <input
+                                        type="text"
+                                        autoComplete="off"
+                                        className="form-control"
+                                        placeholder="Write review"
+                                        disabled={posting}
+                                        value={review}
+                                        onChange={e =>
+                                            this.setState({
+                                                review: e.target.value
+                                            })
+                                        }
+                                        required
+                                    />
+                                </form>
+                            </div>
+                            {reviews.map(r => (
+                                <div
+                                    key={r._id}
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginBottom: "1em"
+                                    }}>
+                                    <img
+                                        style={{
+                                            height: 40,
+                                            marginRight: "1em"
+                                        }}
+                                        src={r.author.photo}
+                                        alt=""
+                                    />
+                                    <div>
+                                        <span style={{ fontWeight: "bold" }}>
+                                            {r.author.username}
+                                        </span>
+                                        <br />
+                                        <span>{r.content}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,4 +199,4 @@ class Project extends Component {
     }
 }
 
-export default Project
+export default connect(({ authReducer: { photo } }) => ({ photo }))(Project)
