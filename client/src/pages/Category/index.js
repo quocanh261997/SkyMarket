@@ -14,23 +14,25 @@ class Category extends Component {
     componentDidMount() {
         let id = this.props.match.params.id
         this.setState({ id })
-        api("get", `/categories/${id}`).then(({ name, photo, projects }) =>
-            this.setState({ name, photo, projects })
+        api("get", `/projects?category=${id}`).then(
+            ({ name, photo, projects }) =>
+                this.setState({ name, photo, projects })
         )
     }
 
     nextClick = () => {
-        console.log(this.state.projects.length)
         api(
             "get",
-            `/categories/${this.state.id}?offset=${this.state.projects.length}`
+            `/projects?category=${this.state.id}&offset=${
+                this.state.projects.length
+            }`
         ).then(({ name, photo, projects }) => {
-            console.log(projects)
-            this.setState(prev => ({
-                name,
-                photo,
-                projects: [...prev.projects, ...projects]
-            }))
+            if (projects)
+                this.setState(prev => ({
+                    name,
+                    photo,
+                    projects: [...prev.projects, ...projects]
+                }))
         })
     }
 

@@ -13,7 +13,7 @@ class Homepage extends Component {
     }
 
     componentDidMount() {
-        api("get", "/home").then(data => {
+        api("get", "/projects/home").then(data => {
             this.setState({
                 ...data
             })

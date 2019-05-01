@@ -43,7 +43,7 @@ export const fetchProjectName = name => {
 
 export const signUp = (username, email, password) => {
     return dispatch => {
-        return api("post", "/signup", {
+        return api("post", "/users/signup", {
             username,
             email,
             password
@@ -64,7 +64,7 @@ export const signUp = (username, email, password) => {
 
 export const signIn = (userInput, password) => {
     return async dispatch => {
-        return api("post", "/signin", {
+        return api("post", "/users/signin", {
             userInput,
             password
         })

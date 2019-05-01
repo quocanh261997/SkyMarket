@@ -1,7 +1,7 @@
-const monoogse = require("mongoose")
+const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 
-const UserSchema = new monoogse.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -19,7 +19,13 @@ const UserSchema = new monoogse.Schema({
     photo: {
         type: String,
         required: true
-    }
+    },
+    starProjects: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Project"
+        }
+    ]
 })
 
 UserSchema.pre("save", async function(next) {
@@ -45,4 +51,4 @@ UserSchema.methods.comparePassword = async function(password) {
     }
 }
 
-module.exports = monoogse.model("User", UserSchema)
+module.exports = mongoose.model("User", UserSchema)
