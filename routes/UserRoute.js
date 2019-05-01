@@ -1,7 +1,6 @@
-const db = require("../models")
-const express = require("express")
-const jwt = require("jsonwebtoken")
-const router = express.Router()
+const db = require("../models"),
+    jwt = require("jsonwebtoken"),
+    router = require("express").Router()
 
 router.get("/search", async (req, res, next) => {
     try {
@@ -33,12 +32,12 @@ router.post("/signup", async (req, res, next) => {
         password,
         photo
     })
-        .then(({ _id, username, photo }) => {
+        .then(({ id, username, photo }) => {
             let token = jwt.sign(
-                { _id, username, photo },
+                { id, username, photo },
                 process.env.SECRET_KEY
             )
-            res.status(201).json({ _id, username, photo, token })
+            res.status(201).json({ id, username, photo, token })
         })
         .catch(err => {
             if (err.code === 11000) {
@@ -64,12 +63,12 @@ router.post("/signin", async (req, res, next) => {
         })
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
-            const { _id, username, photo } = user
+            const { id, username, photo } = user
             let token = jwt.sign(
-                { _id, username, photo },
+                { id, username, photo },
                 process.env.SECRET_KEY
             )
-            res.status(200).json({ _id, username, photo, token })
+            res.status(200).json({ id, username, photo, token })
         } else
             next({
                 status: 400,

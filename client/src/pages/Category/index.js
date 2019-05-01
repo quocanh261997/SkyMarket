@@ -44,12 +44,10 @@ class Category extends Component {
                         display: "flex",
                         alignItems: "center",
                         marginBottom: "1em"
-                    }}
-                >
+                    }}>
                     <button
                         className="btn btn-outline"
-                        onClick={() => this.props.history.goBack()}
-                    >
+                        onClick={() => this.props.history.goBack()}>
                         Back
                     </button>
                     <div
@@ -57,8 +55,7 @@ class Category extends Component {
                             display: "flex",
                             alignItems: "center",
                             marginLeft: "1em"
-                        }}
-                    >
+                        }}>
                         <h3 style={{ margin: 0 }}>{this.state.name}</h3>
                         <img
                             style={{ width: 35, marginLeft: 10 }}
@@ -70,7 +67,7 @@ class Category extends Component {
                 <div className="row m-auto">
                     {this.state.projects.map((p, i) => (
                         <ProjectItem
-                            key={p ? p._id : i}
+                            key={p ? p.id : i}
                             project={p}
                             size="large"
                         />
@@ -81,8 +78,7 @@ class Category extends Component {
                         display: "flex",
                         justifyContent: "center",
                         marginBottom: "1em"
-                    }}
-                >
+                    }}>
                     <button className="btn btn-fill" onClick={this.nextClick}>
                         Load More
                     </button>

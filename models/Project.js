@@ -52,12 +52,6 @@ const ProjectSchema = new mongoose.Schema(
                 ref: "User",
                 required: true
             }
-        ],
-        reviews: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Review"
-            }
         ]
     },
     {

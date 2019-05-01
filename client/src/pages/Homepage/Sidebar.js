@@ -13,8 +13,8 @@ class Sidebar extends Component {
         )
     }
 
-    handleClick = ({ _id }) => {
-        this.props.history.push(`/categories/${_id}`)
+    handleClick = ({ id }) => {
+        this.props.history.push(`/categories/${id}`)
     }
 
     render() {
@@ -24,7 +24,7 @@ class Sidebar extends Component {
                 <ul id="sidebar" className="sidebar collapse">
                     {this.state.categories.map(cate => (
                         <li
-                            key={cate._id}
+                            key={cate.id}
                             className="sidebar-item"
                             onClick={() => this.handleClick(cate)}>
                             {cate.name}

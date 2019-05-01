@@ -13,7 +13,7 @@ class Homepage extends Component {
     }
 
     componentDidMount() {
-        api("get", "/projects/home").then(data => {
+        api("get", "/projects").then(data => {
             this.setState({
                 ...data
             })
@@ -36,13 +36,13 @@ class Homepage extends Component {
                                 <h2>Showcase your projects with SkyMarket</h2>
                                 <SearchBox
                                     loadOptions={this.getProjects}
-                                    optionKey={o => o._id}
+                                    optionKey={o => o.id}
                                     optionLabel={o => o.name}
                                     optionImg={o => o.icon}
                                     placeholder="Search Projects"
-                                    onSelect={({ _id }) => {
+                                    onSelect={({ id }) => {
                                         this.props.history.push(
-                                            `/projects/${_id}`
+                                            `/projects/${id}`
                                         )
                                     }}
                                 />
@@ -62,7 +62,7 @@ class Homepage extends Component {
                         <div className="row">
                             {this.state.featured.map((project, index) => (
                                 <ProjectItem
-                                    key={project ? project._id : index}
+                                    key={project ? project.id : index}
                                     project={project}
                                 />
                             ))}
@@ -71,7 +71,7 @@ class Homepage extends Component {
                         <div className="row">
                             {this.state.trending.map((project, index) => (
                                 <ProjectItem
-                                    key={project ? project._id : index}
+                                    key={project ? project.id : index}
                                     project={project}
                                     size="small"
                                 />
@@ -81,7 +81,7 @@ class Homepage extends Component {
                         <div className="row">
                             {this.state.recent.map((project, index) => (
                                 <ProjectItem
-                                    key={project ? project._id : index}
+                                    key={project ? project.id : index}
                                     project={project}
                                     size="small"
                                 />
