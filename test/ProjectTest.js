@@ -8,7 +8,7 @@ const assert = chai.assert
 chai.should()
 chai.use(chaiHttp)
 
-describe("Get Projects", () => {
+describe("Projects", () => {
     it("should return featured, trending and recent lists", done => {
         chai.request(baseURL)
             .get("/")
@@ -54,9 +54,7 @@ describe("Get Projects", () => {
                 console.log(err)
             })
     })
-})
 
-describe("Projects Search", () => {
     it("should return a list of projects whose names contain 'foo'", done => {
         chai.request(baseURL)
             .get("/search")
@@ -71,9 +69,7 @@ describe("Projects Search", () => {
                 console.log(err)
             })
     })
-})
 
-describe("Project Details", () => {
     it("should return details of project Bytecard", done => {
         chai.request(baseURL)
             .get("/5caec78dc02d2d3bb8af4504")
@@ -149,8 +145,6 @@ describe("Create Project", () => {
             })
     })
 })
-
-describe("Project Reviews", () => {})
 
 function cleanUp() {
     return Promise.all([
