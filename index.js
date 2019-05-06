@@ -15,6 +15,8 @@ app.use("/api/projects", routes.projectRoute)
 app.use("/api/categories", routes.categoryRoute)
 
 app.use(function(err, _, res, _) {
+    console.log(err)
+
     res.status(err.status || 500).json({
         type: err.type || "INTERNAL_ERROR"
     })
