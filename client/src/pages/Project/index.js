@@ -73,12 +73,7 @@ class Project extends Component {
             posting
         } = this.state
         return (
-            <div className="container m-auto">
-                <button
-                    className="btn btn-outline"
-                    onClick={() => this.props.history.goBack()}>
-                    Back
-                </button>
+            <div className="container my-4">
                 <div className="row">
                     <div className="col-lg-3 col-md-4 text-center">
                         <div
@@ -214,8 +209,7 @@ class Project extends Component {
                                     key={r._id}
                                     style={{
                                         display: "flex",
-                                        alignItems: "center",
-                                        marginBottom: "1em"
+                                        alignItems: "center"
                                     }}>
                                     <img
                                         style={{

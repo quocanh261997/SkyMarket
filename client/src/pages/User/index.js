@@ -49,11 +49,6 @@ class User extends Component {
         const { username, email, photo, projects, backgroundColor } = this.state
         return (
             <div className="container m-auto">
-                <button
-                    className="btn btn-outline"
-                    onClick={() => this.props.history.goBack()}>
-                    Back
-                </button>
                 <div className="row">
                     <div className="col-lg-3 text-center">
                         <div

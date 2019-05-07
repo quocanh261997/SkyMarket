@@ -37,18 +37,13 @@ class Category extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container my-4">
                 <div
                     style={{
                         display: "flex",
                         alignItems: "center",
                         marginBottom: "1em"
                     }}>
-                    <button
-                        className="btn btn-outline"
-                        onClick={() => this.props.history.goBack()}>
-                        Back
-                    </button>
                     <div
                         style={{
                             display: "flex",
@@ -75,8 +70,7 @@ class Category extends Component {
                 <div
                     style={{
                         display: "flex",
-                        justifyContent: "center",
-                        marginBottom: "1em"
+                        justifyContent: "center"
                     }}>
                     <button className="btn btn-fill" onClick={this.nextClick}>
                         Load More

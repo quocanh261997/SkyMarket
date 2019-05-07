@@ -81,9 +81,11 @@ class Navbar extends Component {
                         <img src={Logo} alt="" />
                     </span>
                     <div className="navbar-right">
-                        <Link to="/" className="btn btn-outline">
-                            Browse
-                        </Link>
+                        {this.props.location.pathname !== "/" && (
+                            <Link to="/" className="btn btn-outline">
+                                Browse
+                            </Link>
+                        )}
                         {this.renderUsername()}
                         {this.props.location.pathname === "/" && (
                             <button
