@@ -16,7 +16,7 @@ class Project extends Component {
         categories: [],
         developers: [],
         reviews: [],
-        backgroundColor: "",
+        backgroundColor: "#eeeeee",
         review: "",
         posting: false
     }
@@ -77,13 +77,9 @@ class Project extends Component {
                 <div className="row">
                     <div className="col-lg-3 col-md-4 text-center mt-1">
                         <div
+                            className="icon-container-center"
                             style={{
-                                width: 150,
-                                height: 150,
-                                margin: "1em auto",
-                                backgroundColor,
-                                borderRadius: "0.8em",
-                                padding: "1em"
+                                backgroundColor
                             }}>
                             <img style={{ width: 100 }} src={icon} alt="" />
                         </div>

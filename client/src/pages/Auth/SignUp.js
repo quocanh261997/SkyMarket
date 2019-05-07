@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import { Link, withRouter } from "react-router-dom"
 import { signUp } from "../../libs/redux/actions"
 import { DUPLICATE_EMAIL, DUPLICATE_USERNAME } from "../../libs/redux/types"
+import IconUpload from "../../static/IconUpload.png"
+import ImageUploader from "../components/ImageUploader"
 
 class SignUp extends Component {
     state = {
@@ -15,13 +17,22 @@ class SignUp extends Component {
     onSignUp = e => {
         e.preventDefault()
         this.setState({ error: "" })
-        const { username, password, email } = this.state
+        const {
+            username,
+            password,
+            email,
+            photo = "http://www.colegioexpressao.com/assets/images/avatar-2.png"
+        } = this.state
         if (username && password && email) {
             this.props
-                .signUp(username, email, password)
+                .signUp(username, email, password, photo)
                 .then(() => this.props.history.push("/"))
                 .catch(error => this.setState({ error: error.message }))
         }
+    }
+
+    handlePhotoUpload = name => {
+        ImageUploader.getImage(name).then(photo => this.setState({ photo }))
     }
 
     handleChange = e => {
@@ -33,6 +44,13 @@ class SignUp extends Component {
             <div className="container">
                 <form className="auth-form" onSubmit={this.onSignUp}>
                     <h2>Sign Up</h2>
+                    <ImageUploader
+                        style={{ margin: "auto" }}
+                        backgroundImage={
+                            this.state.photo ? this.state.photo : IconUpload
+                        }
+                        onUploadSuccess={this.handlePhotoUpload}
+                    />
                     <div className="form-group">
                         <input
                             type="text"

@@ -1,12 +1,13 @@
 import api, { removeAuthHeader, setAuthHeader } from "../api"
 import { SIGN_IN, SIGN_OUT, STAR_PROJECT, STAR_PROJECTS } from "./types"
 
-export const signUp = (username, email, password) => {
+export const signUp = (username, email, password, photo) => {
     return dispatch => {
         return api("post", "/users/signup", {
             username,
             email,
-            password
+            password,
+            photo
         })
             .then(({ token, ...payload }) => {
                 setAuthHeader(token)

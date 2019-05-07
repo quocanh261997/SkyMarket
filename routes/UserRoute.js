@@ -35,12 +35,7 @@ router.get("/:id/starProjects", async (req, res, next) => {
 })
 
 router.post("/signup", async (req, res, next) => {
-    const {
-        username,
-        email,
-        password,
-        photo = "http://www.colegioexpressao.com/assets/images/avatar-2.png"
-    } = req.body
+    const { username, email, password, photo } = req.body
     db.User.create({
         username,
         email,
