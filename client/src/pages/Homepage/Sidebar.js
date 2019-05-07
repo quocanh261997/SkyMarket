@@ -19,9 +19,9 @@ class Sidebar extends Component {
 
     render() {
         return (
-            <div id="sidebar" className="sidebar collapse">
+            <div id="sidebar" className="collapse">
                 <h3>Categories</h3>
-                <ul>
+                <ul className="sidebar">
                     {this.state.categories.map(cate => (
                         <li
                             key={cate._id}
