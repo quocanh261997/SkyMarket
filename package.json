@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "mocha test",
-        "start": "nodemon index.js",
+        "start": "node index.js",
         "postinstall": "cd client && npm install",
         "heroku-postbuild": "cd client && npm run build",
         "sass-compile": "sass --watch --style compressed --no-source-map client/src/pages/App/index.scss:client/src/pages/App/index.css",
