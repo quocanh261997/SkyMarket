@@ -78,9 +78,12 @@ export default class index extends Component {
                 ...this.state,
                 developers: selectedDevs.map(d => d._id),
                 categories: selectedCats.map(c => c._id)
-            }).then(({ project }) =>
-                this.props.history.push(`/projects/${project}`)
-            )
+            }).then(() => {
+                window.$("#modal").modal()
+                window.$("#modal").on("hidden.bs.modal", () => {
+                    this.props.history.push("/")
+                })
+            })
         }
     }
 
@@ -208,6 +211,39 @@ export default class index extends Component {
                     </div>
                     <input type="submit" className="btn btn-fill" />
                 </form>
+
+                <div
+                    className="modal fade"
+                    id="modal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Good work!</h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                An admin will review your submission shortly.
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

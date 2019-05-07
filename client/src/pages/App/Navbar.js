@@ -42,14 +42,22 @@ class Navbar extends Component {
                         Hello {this.props.username}!
                     </button>
                     <div className="dropdown-menu">
-                        <Link
-                            to={`/users/${this.props._id}`}
-                            className="dropdown-item">
-                            Profile
-                        </Link>
-                        <Link to="/upload" className="dropdown-item">
-                            Upload
-                        </Link>
+                        {this.props.permissionLevel < 1 ? (
+                            <div>
+                                <Link
+                                    to={`/users/${this.props._id}`}
+                                    className="dropdown-item">
+                                    Profile
+                                </Link>
+                                <Link to="/upload" className="dropdown-item">
+                                    Upload
+                                </Link>
+                            </div>
+                        ) : (
+                            <Link to="/admin" className="dropdown-item">
+                                Admin
+                            </Link>
+                        )}
                         <span
                             className="dropdown-item"
                             onClick={this.props.signOut}>
@@ -97,7 +105,11 @@ class Navbar extends Component {
 
 export default withRouter(
     connect(
-        ({ authReducer: { _id, username } }) => ({ _id, username }),
+        ({ authReducer: { _id, username, permissionLevel } }) => ({
+            _id,
+            username,
+            permissionLevel
+        }),
         { signOut }
     )(Navbar)
 )

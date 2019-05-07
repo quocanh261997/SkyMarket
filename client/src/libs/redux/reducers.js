@@ -4,6 +4,7 @@ const INITIAL_AUTH_STATE = {
     _id: "",
     username: "",
     photo: "",
+    permissionLevel: 0,
     starProjects: []
 }
 

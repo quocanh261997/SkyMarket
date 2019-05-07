@@ -20,25 +20,37 @@ const authorizeAdmin = (req, _, next) => {
 
 router.get("/", authorizeAdmin, async (req, res, next) => {
     try {
-        const projects = await db.Project.find({
-            confirmed: false
-        })
+        const projects = await db.PendingProject.find({})
         res.status(200).json({ projects })
     } catch (err) {
         next(err)
     }
 })
 
-router.put("/:id", authorizeAdmin, async (req, res, next) => {
+router.post("/", authorizeAdmin, async (req, res, next) => {
     try {
-        const { confirmed } = req.body
-        const id = req.params.id
+        const { id, confirmed } = req.body
         if (confirmed) {
-            await db.Project.findByIdAndUpdate(id, {
-                confirmed: true
+            const {
+                icon,
+                name,
+                headline,
+                description,
+                photos,
+                developers,
+                categories
+            } = await db.PendingProject.findByIdAndRemove(id)
+            await db.Project.create({
+                icon,
+                name,
+                headline,
+                description,
+                photos,
+                developers,
+                categories
             })
         } else {
-            await db.Project.findByIdAndDelete(id)
+            await db.PendingProject.findByIdAndRemove(id)
         }
         res.status(204).json({})
     } catch (err) {

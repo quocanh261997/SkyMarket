@@ -1,14 +1,15 @@
 import React, { Component } from "react"
 import api from "../../libs/api"
+import { connect } from "react-redux"
 
 class Admin extends Component {
     state = {
-        id: null,
-        projects: [...Array(3)]
+        projects: []
     }
 
     componentDidMount() {
-        setTimeout(() => this.getProjects(), 50)
+        if (this.props.permissionLevel < 1) this.props.history.push("/")
+        else setTimeout(() => this.getProjects(), 50)
     }
 
     //Get all the uploaded projects
@@ -20,8 +21,9 @@ class Admin extends Component {
 
     //Decide if a project is to be accepted or rejected
     decideProject = (id, confirmed) => {
-        api("put", `/admin/${id}`, {
-            confirmed: confirmed
+        api("post", `/admin`, {
+            id,
+            confirmed
         }).then(() => {
             this.setState(prevState => ({
                 projects: prevState.projects.filter(
@@ -77,13 +79,19 @@ class Admin extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container my-4">
                 <div className="row m-auto">
-                    {this.state.projects.map(p => this.renderProjectItem(p))}
+                    {this.state.projects.length > 0 ? (
+                        this.state.projects.map(p => this.renderProjectItem(p))
+                    ) : (
+                        <h4>No pending projects to review</h4>
+                    )}
                 </div>
             </div>
         )
     }
 }
 
-export default Admin
+export default connect(({ authReducer: { permissionLevel } }) => ({
+    permissionLevel
+}))(Admin)

@@ -17,6 +17,7 @@ mongoose
 module.exports = {
     User: require("./User"),
     Project: require("./Project"),
+    PendingProject: require("./PendingProject"),
     Review: require("./Review"),
     Category: require("./Category")
 }

@@ -56,6 +56,7 @@ router.post("/signup", async (req, res, next) => {
                 _id,
                 username,
                 photo,
+                permissionLevel,
                 token
             })
         })
@@ -93,6 +94,7 @@ router.post("/signin", async (req, res, next) => {
                 username,
                 photo,
                 starProjects,
+                permissionLevel,
                 token
             })
         } else

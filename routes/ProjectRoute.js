@@ -82,7 +82,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", authorize, async (req, res, next) => {
     try {
-        const { _id } = await db.Project.create(req.body)
+        const { _id } = await db.PendingProject.create(req.body)
         res.status(201).json({ project: _id })
     } catch (err) {
         next(err)
