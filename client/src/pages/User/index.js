@@ -50,7 +50,7 @@ class User extends Component {
         return (
             <div className="container m-auto">
                 <div className="row">
-                    <div className="col-lg-3 text-center">
+                    <div className="col-lg-3 text-center mt-1">
                         <div
                             style={{
                                 width: 150,
@@ -67,7 +67,7 @@ class User extends Component {
                             <p>{email}</p>
                         </div>
                     </div>
-                    <div className=" col-lg-9">
+                    <div className=" col-lg-9 my-4">
                         <h2>{username}'s projects</h2>
                         <div className="row">
                             {projects.map((p, i) => (

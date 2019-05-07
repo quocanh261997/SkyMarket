@@ -73,9 +73,9 @@ class Project extends Component {
             posting
         } = this.state
         return (
-            <div className="container my-4">
+            <div className="container">
                 <div className="row">
-                    <div className="col-lg-3 col-md-4 text-center">
+                    <div className="col-lg-3 col-md-4 text-center mt-1">
                         <div
                             style={{
                                 width: 150,
@@ -120,7 +120,7 @@ class Project extends Component {
                             ))}
                         </div>
                     </div>
-                    <div className="col-lg-9 col-md-8">
+                    <div className="col-lg-9 col-md-8 my-4">
                         <div
                             style={{
                                 display: "flex",
