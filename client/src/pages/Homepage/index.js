@@ -53,11 +53,11 @@ class Homepage extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="container row mx-auto">
+                <div style={{ padding: 0 }} className="container row mx-auto">
                     <div className="col-md-4 mt-4">
                         <Sidebar />
                     </div>
-                    <div className="col-md-8 mt-4">
+                    <div className="col-md-8 mt-md-4">
                         <h4>Featured Projects</h4>
                         <div className="row">
                             {this.state.featured.map((project, index) => (
@@ -67,7 +67,7 @@ class Homepage extends Component {
                                 />
                             ))}
                         </div>
-                        <h4>Trending Projects</h4>
+                        <h4 className="mt-2">Trending Projects</h4>
                         <div className="row">
                             {this.state.trending.map((project, index) => (
                                 <ProjectItem
@@ -77,7 +77,7 @@ class Homepage extends Component {
                                 />
                             ))}
                         </div>
-                        <h4>Recent Projects</h4>
+                        <h4 className="mt-2">Recent Projects</h4>
                         <div className="row">
                             {this.state.recent.map((project, index) => (
                                 <ProjectItem

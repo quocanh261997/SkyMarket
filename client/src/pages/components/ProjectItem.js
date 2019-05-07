@@ -31,7 +31,7 @@ class ProjectItem extends PureComponent {
             return (
                 <div
                     onClick={this.handleClick}
-                    className="col-sm-6 col-md-12 col-lg-6 mb-4">
+                    className="col-sm-6 col-md-12 col-lg-6 mb-3">
                     <div className="project-item__small">
                         <img
                             className="project-item__image"
@@ -49,7 +49,7 @@ class ProjectItem extends PureComponent {
             return (
                 <div
                     onClick={this.handleClick}
-                    className="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    className="col-lg-3 col-md-4 col-sm-6 mb-3">
                     <div className="project-item">
                         <div
                             style={{ backgroundColor }}
@@ -71,7 +71,7 @@ class ProjectItem extends PureComponent {
             return (
                 <div
                     onClick={this.handleClick}
-                    className="col-lg-4 col-sm-6 mb-4">
+                    className="col-lg-4 col-sm-6 mb-3">
                     <div className="project-item">
                         <div
                             style={{ backgroundColor }}
