@@ -42,11 +42,31 @@ class Admin extends Component {
             <div className="container">
                 <div className="row">
                     {this.state.projects.map((p, i) => (
-                        <ProjectItem
-                            key={p ? p._id : i}
-                            project={p}
-                            size="lage"
-                        />
+                        <div>
+                            <ProjectItem
+                                key={p ? p._id : i}
+                                project={p}
+                                size="lage"
+                            />
+                            <button
+                                className="btn btn-success"
+                                onClick={this.decideProject(
+                                    p ? p._id : i,
+                                    true
+                                )}
+                            >
+                                Accept
+                            </button>
+                            <button
+                                className="btn btn-danger"
+                                onClick={this.decideProject(
+                                    p ? p._id : i,
+                                    false
+                                )}
+                            >
+                                Reject
+                            </button>
+                        </div>
                     ))}
                 </div>
             </div>
