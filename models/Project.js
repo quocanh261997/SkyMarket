@@ -52,7 +52,11 @@ const ProjectSchema = new mongoose.Schema(
                 ref: "User",
                 required: true
             }
-        ]
+        ],
+        confirmed: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true

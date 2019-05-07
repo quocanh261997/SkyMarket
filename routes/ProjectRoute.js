@@ -17,6 +17,27 @@ const authorize = (req, _, next) => {
     }
 }
 
+const authorizeAdmin = (req, _, next) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1]
+        const payload = jwt.verify(token, process.env.SECRET_KEY)
+        const { permissionLevel } = payload
+        req.permissionLevel = permissionLevel
+        if (permissionLevel == 1) next()
+        else {
+            next({
+                status: 401,
+                type: "UNAUTHORIZED"
+            })
+        }
+    } catch (err) {
+        next({
+            status: 401,
+            type: "UNAUTHORIZED"
+        })
+    }
+}
+
 router.post("/", authorize, async (req, res, next) => {
     try {
         const { _id } = await db.Project.create(req.body)
@@ -84,6 +105,34 @@ router.get("/", async (req, res, next) => {
                 recent
             })
         }
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get("/admin", authorizeAdmin, async (req, res, next) => {
+    try {
+        const projects = await db.Project.find({
+            confirmed: false
+        })
+        res.status(200).json({ projects })
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.put("/admin/:id", authorizeAdmin, async (req, res, next) => {
+    try {
+        const { confirmed } = req.body
+        const id = req.params.id
+        if (confirmed) {
+            await db.Project.findByIdAndUpdate(id, {
+                confirmed: true
+            })
+        } else {
+            await db.Project.findByIdAndDelete(id)
+        }
+        res.status(204).json({})
     } catch (err) {
         next(err)
     }
