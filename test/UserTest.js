@@ -115,7 +115,7 @@ describe("Authentication", () => {
     })
 })
 
-describe("Search Users", () => {
+describe("Users", () => {
     it("should return a list of users whose names contain 'john'", done => {
         chai.request(baseURL)
             .get("/search")
