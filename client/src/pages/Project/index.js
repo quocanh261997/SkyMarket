@@ -9,6 +9,7 @@ class Project extends Component {
         id: "",
         name: "",
         icon: "",
+        stars: 0,
         photos: [],
         headline: "",
         description: "",
@@ -60,6 +61,7 @@ class Project extends Component {
         const {
             name,
             icon,
+            stars,
             photos,
             headline,
             description,
@@ -133,13 +135,19 @@ class Project extends Component {
                             <h2>{name}</h2>
                             <button
                                 className="btn btn-outline-secondary"
-                                onClick={() =>
+                                disabled={!this.props.photo}
+                                onClick={() => {
+                                    this.setState(prev => ({
+                                        stars:
+                                            prev.stars +
+                                            (this.props.star ? -1 : 1)
+                                    }))
                                     this.props.starProject(
                                         this.state.id,
                                         !this.props.star
                                     )
-                                }>
-                                {this.props.star ? "Unstar " : "Star "}
+                                }}>
+                                {stars + " "}
                                 {this.props.star ? (
                                     <i
                                         style={{ color: "orange" }}
@@ -151,7 +159,11 @@ class Project extends Component {
                             </button>
                         </div>
                         <p style={{ fontSize: "large" }}>{headline}</p>
-                        <p style={{ marginTop: "2em", textAlign: "justify" }}>
+                        <p
+                            style={{
+                                marginTop: "2em",
+                                textAlign: "justify"
+                            }}>
                             {description}
                         </p>
                         <div className="row">
@@ -214,7 +226,10 @@ class Project extends Component {
                                         alt=""
                                     />
                                     <div>
-                                        <span style={{ fontWeight: "bold" }}>
+                                        <span
+                                            style={{
+                                                fontWeight: "bold"
+                                            }}>
                                             {r.author.username}
                                         </span>
                                         <br />

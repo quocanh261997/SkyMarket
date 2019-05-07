@@ -9,8 +9,8 @@ const UserSchema = new mongoose.Schema({
     },
     permissionLevel: {
         type: Number,
-        required: true,
-        default: 0
+        default: 0,
+        enum: [0, 1]
     },
     email: {
         type: String,

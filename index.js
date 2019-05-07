@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use("/api/users", routes.userRoute)
+app.use("/api/admin", routes.adminRoute)
 app.use("/api/projects", routes.projectRoute)
 app.use("/api/categories", routes.categoryRoute)
 

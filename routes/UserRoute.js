@@ -37,27 +37,24 @@ router.get("/:id/starProjects", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
     const {
         username,
-        permissionLevel,
         email,
         password,
         photo = "http://www.colegioexpressao.com/assets/images/avatar-2.png"
     } = req.body
     db.User.create({
         username,
-        permissionLevel,
         email,
         password,
         photo
     })
-        .then(({ _id, username, permissionLevel, photo }) => {
+        .then(({ _id, username, photo, permissionLevel }) => {
             let token = jwt.sign(
-                { _id, username, permissionLevel, photo },
+                { _id, username, photo, permissionLevel },
                 process.env.SECRET_KEY
             )
             res.status(201).json({
                 _id,
                 username,
-                permissionLevel,
                 photo,
                 token
             })
@@ -86,18 +83,17 @@ router.post("/signin", async (req, res, next) => {
         })
         let isMatch = await user.comparePassword(password)
         if (isMatch) {
-            const { _id, username, photo, permissionLevel, starProjects } = user
+            const { _id, username, photo, starProjects, permissionLevel } = user
             let token = jwt.sign(
-                { _id, username, permissionLevel, photo },
+                { _id, username, photo, permissionLevel },
                 process.env.SECRET_KEY
             )
             res.status(200).json({
                 _id,
                 username,
-                permissionLevel,
                 photo,
-                token,
-                starProjects
+                starProjects,
+                token
             })
         } else
             next({

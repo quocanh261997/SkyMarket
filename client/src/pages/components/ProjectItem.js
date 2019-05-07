@@ -92,13 +92,8 @@ class ProjectItem extends PureComponent {
     }
 
     handleClick = () => {
-        const { _id, name, headline, icon } = this.props.project
-        if (_id)
-            this.props.history.push(`/projects/${_id}`, {
-                name,
-                headline,
-                icon
-            })
+        const { _id } = this.props.project
+        if (_id) this.props.history.push(`/projects/${_id}`)
     }
 
     render() {
