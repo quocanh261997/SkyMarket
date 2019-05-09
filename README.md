@@ -1,5 +1,7 @@
 ## Sky Market Installation Guide
 
+-   Note: Make sure you have NPM installed on your machine
+
 1. Clone the github repository
 2. Change to the project's repository
 3. Run `npm install` from terminal (may need to be changed to root if shown errors)
