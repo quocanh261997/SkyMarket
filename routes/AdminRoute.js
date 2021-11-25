@@ -1,6 +1,9 @@
 const db = require("../models"),
     jwt = require("jsonwebtoken"),
-    router = require("express").Router()
+    router = require("express").Router(),
+    dotenv = require("dotenv")
+
+dotenv.config()
 
 const authorizeAdmin = (req, _, next) => {
     try {

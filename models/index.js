@@ -1,15 +1,18 @@
 const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+dotenv.config()
 
 const options = {
     useNewUrlParser: true,
-    useCreateIndex: true
 }
+
+console.log(process.env.SECRET_KEY)
 
 mongoose.set("debug", true)
 mongoose.Promise = global.Promise
 mongoose
     .connect(
-        "mongodb://tuanle:tuanlm1235@ds017155.mlab.com:17155/skymarket",
+        process.env.DB_URL,
         options
     )
     .catch(error => console.error(`MongoDB connection error: ${error}`))
